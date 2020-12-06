@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {environment} from "../../environments/environment";
-import {User} from "../interfaces/user";
+import {User, UserLogin} from "../interfaces/user";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -28,7 +28,7 @@ export class LoginService {
     }
   }
 
-  login(item: User): Observable<any> {
+  login(item: UserLogin): Observable<any> {
     return this.http.post(this.URL_API, item);
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from "../../services/login.service";
-import {User} from "../../interfaces/user";
+import {User, UserLogin} from "../../interfaces/user";
 import {NotifierService} from "angular-notifier";
 
 @Component({
@@ -19,10 +19,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    const user: User = {
+    const user: UserLogin = {
       username: this.email,
       password: this.password,
-      role: ''
     };
     this.ls.login(user).subscribe(res => {
         const token = res.token;
