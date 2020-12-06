@@ -9,6 +9,6 @@ import {Service} from "../api/service";
 export class CategoryService extends Service{
 
   constructor(private https: HttpClient) {
-    super(https, environment.api + '/category');
+    super(https, environment.api + '/category/');
   }
 }

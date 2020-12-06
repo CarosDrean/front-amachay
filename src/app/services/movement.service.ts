@@ -9,6 +9,6 @@ import {environment} from "../../environments/environment";
 export class MovementService extends Service{
 
   constructor(private https: HttpClient) {
-    super(https, environment.api + '/movement');
+    super(https, environment.api + '/movement/');
   }
 }

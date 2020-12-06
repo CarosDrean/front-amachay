@@ -9,6 +9,6 @@ import {environment} from "../../environments/environment";
 export class ProductService extends Service{
 
   constructor(private https: HttpClient) {
-    super(https, environment.api + '/product');
+    super(https, environment.api + '/product/');
   }
 }

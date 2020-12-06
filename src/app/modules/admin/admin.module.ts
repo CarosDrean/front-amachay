@@ -8,6 +8,7 @@ import { MainComponent } from './components/main/main.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {NotifierModule, NotifierOptions} from "angular-notifier";
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {FormsModule} from "@angular/forms";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -57,6 +58,7 @@ const customNotifierOptions: NotifierOptions = {
     AdminRoutingModule,
     SweetAlert2Module,
     NotifierModule.withConfig(customNotifierOptions),
+    FormsModule,
   ]
 })
 export class AdminModule { }
