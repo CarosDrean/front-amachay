@@ -1,6 +1,19 @@
 declare var $: any;
 
 export class Utils {
+  static dateString(): string {
+    const date = new Date();
+    return date.getFullYear() + '-' + Utils.forDate((date.getMonth() + 1)) + '-' + Utils.forDate(date.getDate());
+  }
+
+  static forDate(n: number): string {
+    let nn = n.toString();
+    if (nn.length === 1) {
+      nn = '0' + nn;
+    }
+    return nn;
+  }
+
   static loadScript(): void {
     $('.topbar .navbar').addClass('navbar-light');
 

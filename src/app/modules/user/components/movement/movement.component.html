@@ -1,1 +1,219 @@
-<p>movement works!</p>
+<div class="page-breadcrumb">
+  <div class="row">
+    <div class="col-6-lg col-md-6 col-sm-12 align-self-center">
+      <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">
+        <div>Lista de {{type == 'input' ? 'Entradas' : 'Salidas'}}</div>
+      </h4>
+      <div class="d-flex align-items-center">
+        <nav aria-label="breadcrumb">
+          <div>
+            <ol role="list" class="breadcrumb m-0 p-0">
+              <li class="breadcrumb-item">
+                <a routerLink="dashboard" class="text-muted">Inicio</a>
+              </li>
+              <li class="breadcrumb-item text-muted active" aria-current="page">
+                {{type == 'input' ? 'Entradas' : 'Salidas'}}
+              </li>
+            </ol>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="col-6-lg col-md-6 col-sm-12 align-self-center">
+      <div class="customize-input float-right">
+        <div class="row" style="margin-top: 1.5em">
+          <div class="col-6">
+            <div class="form-group">
+              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="from" name="from" (change)="updateDate()">
+              <small id="textHelp" class="form-text text-muted">Desde</small>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="to" name="to" (change)="updateDate()">
+              <small id="textHelp2" class="form-text text-muted">Hasta</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" style="padding: 30px;">
+  <div class="row">
+    <div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#form-user"
+        (click)="clean()"
+        style="margin: 20px;"
+      >
+        Agregar
+      </button>
+    </div>
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <div>
+              <table class="table">
+                <thead class="bg-success text-white">
+                <tr>
+                  <th>#</th>
+                  <th>Producto</th>
+                  <th>Catidad</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr
+                  *ngFor="let item of ms.items; let i = index"
+                  [attr.data-index]="i"
+                >
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.idProduct }}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn waves-effect waves-light btn-rounded btn-sm btn-success"
+                      (click)="edit(item)"
+                      data-toggle="modal"
+                      data-target="#form-user"
+                      style="margin-right: 5px;"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      (click)="getKeyForDelete(item._id)"
+                      class="btn waves-effect waves-light btn-rounded btn-sm btn-danger"
+                      [swal]="deleteSwal"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal
+  #deleteSwal
+  title="¿Estas seguro?"
+  text="Los datos no se podran recuperar."
+  icon="question"
+  [showCancelButton]="true"
+  [focusCancel]="true"
+  (cancel)="clean()"
+  (confirm)="deleteItem()"
+>
+</swal>
+
+
+<div
+  id="form-user"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">{{ case }} {{type == 'input' ? 'Entrada' : 'Salida'}}</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form class="pl-3 pr-3" action="#">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Producto</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect1"
+              name="role"
+              [(ngModel)]="item.idProduct"
+            >
+              <option *ngFor="let p of products" value="{{p._id}}">{{p.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Catidad</label>
+            <input
+              class="form-control"
+              type="number"
+              id="quantity"
+              required=""
+              name="quantity"
+              [(ngModel)]="item.quantity"
+              placeholder="25"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">Cliente</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect2"
+              name="role"
+              [(ngModel)]="item.idClient"
+            >
+              <option *ngFor="let c of clients" value="{{c._id}}">{{c.name}} {{c.lastName}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="date">Fecha</label>
+            <input
+              id="date"
+              type="date"
+              class="form-control"
+              value="2018-05-13"
+              [(ngModel)]="item.date"
+              name="from"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-light"
+          data-dismiss="modal"
+          (click)="clean()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="sendForm()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<notifier-container></notifier-container>
