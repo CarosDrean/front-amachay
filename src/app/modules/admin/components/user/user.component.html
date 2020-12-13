@@ -1,1 +1,294 @@
-<p>user works!</p>
+<div class="page-breadcrumb">
+  <div class="row">
+    <div class="col-7 align-self-center">
+      <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">
+        <div>Lista de Usuarios</div>
+      </h4>
+      <div class="d-flex align-items-center">
+        <nav aria-label="breadcrumb">
+          <div>
+            <ol role="list" class="breadcrumb m-0 p-0">
+              <li class="breadcrumb-item">
+                <a routerLink="dashboard" class="text-muted">Inicio</a>
+              </li>
+              <li class="breadcrumb-item text-muted active" aria-current="page">
+                {{title}}
+              </li>
+            </ol>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="col-5 align-self-center">
+      <div class="customize-input float-right">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid" style="padding: 30px;">
+  <div class="row">
+    <div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#form-user"
+        (click)="clean()"
+        style="margin: 20px;"
+      >
+        Agregar
+      </button>
+    </div>
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <div>
+              <table class="table">
+                <thead class="bg-success text-white">
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Rol</th>
+                  <th>Celular</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr
+                  *ngFor="let item of us.items; let i = index"
+                  [attr.data-index]="i"
+                >
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.name }} {{item.lastName}}</td>
+                  <td>{{item.role == 'Admin' ? 'Administrador' : 'Almacenero'}}</td>
+                  <td>{{item.cel}}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn waves-effect waves-light btn-rounded btn-sm btn-success"
+                      (click)="edit(item)"
+                      data-toggle="modal"
+                      data-target="#form-user"
+                      style="margin-right: 5px;"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      (click)="getKeyForDelete(item._id)"
+                      class="btn waves-effect waves-light btn-rounded btn-sm btn-danger"
+                      [swal]="deleteSwal"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal
+  #deleteSwal
+  title="¿Estas seguro?"
+  text="Los datos no se podran recuperar."
+  icon="question"
+  [showCancelButton]="true"
+  [focusCancel]="true"
+  (cancel)="clean()"
+  (confirm)="deleteItem()"
+>
+</swal>
+
+<div
+  id="form-user"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">{{ case }} {{title}}</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form class="pl-3 pr-3" action="#">
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="name">Nombres</label>
+              <input
+                class="form-control"
+                type="text"
+                id="name"
+                required=""
+                name="name"
+                [(ngModel)]="item.name"
+                placeholder="Michael Zenaty"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="lastname">Apellidos</label>
+              <input
+                class="form-control"
+                type="text"
+                id="lastname"
+                required=""
+                name="lastname"
+                [(ngModel)]="item.lastName"
+                placeholder="Vega Lope"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="email">Correo</label>
+              <input
+                class="form-control"
+                type="email"
+                id="email"
+                required=""
+                name="email"
+                [(ngModel)]="item.mail"
+                placeholder="john@deo.com"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="password">Contraseña</label>
+              <input
+                class="form-control"
+                type="password"
+                required=""
+                id="password"
+                name="password"
+                [(ngModel)]="item.password"
+                placeholder="Ingrese contraseña"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="cel">Celular</label>
+              <input
+                class="form-control"
+                type="text"
+                id="cel"
+                required=""
+                name="cel"
+                [(ngModel)]="item.cel"
+                placeholder="956847512"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="username">Nombre de Usuario</label>
+              <input
+                class="form-control"
+                type="text"
+                id="username"
+                required=""
+                name="cel"
+                [(ngModel)]="item.username"
+                placeholder="Usuario"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="tel">Telefono</label>
+              <input
+                class="form-control"
+                type="text"
+                id="tel"
+                required=""
+                name="tel"
+                [(ngModel)]="item.phone"
+                placeholder="956847512"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="address">Dirección</label>
+              <input
+                class="form-control"
+                type="text"
+                id="address"
+                required=""
+                name="address"
+                [(ngModel)]="item.address"
+                placeholder="Dirección"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="dni">DNI</label>
+              <input
+                class="form-control"
+                type="text"
+                id="dni"
+                required=""
+                name="address"
+                [(ngModel)]="item.dni"
+                placeholder="22548796"
+              />
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="exampleFormControlSelect2">Rol</label>
+              <select
+                class="form-control"
+                id="exampleFormControlSelect2"
+                name="role"
+                [(ngModel)]="item.role"
+              >
+                <option value="Admin">Administrador</option>
+                <option value="Warehouse">Almacenero</option>
+              </select>
+            </div>
+            <div class="form-group col-lg-6" *ngIf="item.role == 'Warehouse'">
+              <label for="exampleFormControlSelect3">Almacen</label>
+              <select
+                class="form-control"
+                id="exampleFormControlSelect3"
+                name="role"
+                [(ngModel)]="item.idWarehouse"
+              >
+                <option *ngFor="let itemW of warehouses" value="{{itemW._id}}">{{itemW.name}}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-light"
+          data-dismiss="modal"
+          (click)="clean()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="sendForm()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<notifier-container></notifier-container>

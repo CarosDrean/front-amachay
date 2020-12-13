@@ -11,6 +11,7 @@ export interface User {
   address: string;
   dni: string;
   mail: string;
+  idWarehouse?: number;
 }
 
 export interface UserLogin {

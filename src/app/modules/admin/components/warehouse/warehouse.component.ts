@@ -28,11 +28,16 @@ export class WarehouseComponent extends ComponentAbstract implements OnInit {
     this.item = Object.assign({}, item);
   }
 
+  sendForm() {
+    this.item.state = this.item.state.toString() === 'true';
+    this.addItem(this.item);
+  }
+
   resetItem() {
     this.item = {
       name: '',
       address: '',
-      state: ''
+      state: true
     };
   }
 
