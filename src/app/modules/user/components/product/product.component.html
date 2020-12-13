@@ -1,1 +1,221 @@
-<p>product works!</p>
+<div class="page-breadcrumb">
+  <div class="row">
+    <div class="col-7 align-self-center">
+      <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">
+        <div>Lista de Productos</div>
+      </h4>
+      <div class="d-flex align-items-center">
+        <nav aria-label="breadcrumb">
+          <div>
+            <ol role="list" class="breadcrumb m-0 p-0">
+              <li class="breadcrumb-item">
+                <a routerLink="dashboard" class="text-muted">Inicio</a>
+              </li>
+              <li class="breadcrumb-item text-muted active" aria-current="page">
+                {{title}}
+              </li>
+            </ol>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="col-5 align-self-center">
+      <div class="customize-input float-right">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" style="padding: 30px;">
+  <div class="row">
+    <div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#form-user"
+        (click)="clean()"
+        style="margin: 20px;"
+      >
+        Agregar
+      </button>
+    </div>
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <div>
+              <table class="table">
+                <thead class="bg-success text-white">
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Descripcion</th>
+                  <th>Preccio</th>
+                  <th>Stock</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr
+                  *ngFor="let item of ps.items; let i = index"
+                  [attr.data-index]="i"
+                >
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>{{item.description}}</td>
+                  <td>{{item.price}}</td>
+                  <th>{{item.stock}}</th>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn waves-effect waves-light btn-rounded btn-sm btn-success"
+                      (click)="edit(item)"
+                      data-toggle="modal"
+                      data-target="#form-user"
+                      style="margin-right: 5px;"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      (click)="getKeyForDelete(item._id)"
+                      class="btn waves-effect waves-light btn-rounded btn-sm btn-danger"
+                      [swal]="deleteSwal"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal
+  #deleteSwal
+  title="¿Estas seguro?"
+  text="Los datos no se podran recuperar."
+  icon="question"
+  [showCancelButton]="true"
+  [focusCancel]="true"
+  (cancel)="clean()"
+  (confirm)="deleteItem()"
+>
+</swal>
+
+<div
+  id="form-user"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">{{ case }} {{title}}</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form class="pl-3 pr-3" action="#">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input
+              class="form-control"
+              type="text"
+              id="name"
+              required=""
+              name="name"
+              [(ngModel)]="item.name"
+              placeholder="Nombre"
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Descripcion</label>
+            <input
+              class="form-control"
+              type="text"
+              id="description"
+              required=""
+              name="description"
+              [(ngModel)]="item.description"
+              placeholder="Descripcion del producto"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Categoria</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect1"
+              name="role"
+              [(ngModel)]="item.idCategory"
+            >
+              <option *ngFor="let category of categories" value="{{category._id}}">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="price">Precio</label>
+            <input
+              class="form-control"
+              type="number"
+              id="price"
+              required=""
+              name="price"
+              [(ngModel)]="item.price"
+              placeholder="5.5"
+            />
+          </div>
+          <div class="form-group">
+            <label for="stock">Stock</label>
+            <input
+              class="form-control"
+              type="number"
+              id="stock"
+              required=""
+              name="stock"
+              [(ngModel)]="item.stock"
+              placeholder="5"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-light"
+          data-dismiss="modal"
+          (click)="clean()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="sendForm()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<notifier-container></notifier-container>

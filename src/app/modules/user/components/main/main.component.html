@@ -290,25 +290,26 @@
           <li class="sidebar-item">
             <a
               class="sidebar-link"
-              routerLink="users"
+              [routerLink]="['movements', 'output']"
               routerLinkActive="activo"
               aria-expanded="false"
             >
-              <i data-feather="user" class="feather-icon"></i>
-              <span class="hide-menu">Usuarios</span>
+              <i data-feather="arrow-up-circle" class="feather-icon"></i>
+              <span class="hide-menu">Salidas</span>
             </a>
           </li>
           <li class="sidebar-item">
             <a
               class="sidebar-link"
-              routerLink="clients"
+              [routerLink]="['movements', 'input']"
               routerLinkActive="activo"
               aria-expanded="false"
             >
-              <i data-feather="database" class="feather-icon"></i>
-              <span class="hide-menu">Clientes</span>
+              <i data-feather="arrow-down-circle" class="feather-icon"></i>
+              <span class="hide-menu">Entradas</span>
             </a>
           </li>
+
           <!--<li class="sidebar-item">
             <a class="sidebar-link sidebar-link" routerLink="teachers" routerLinkActive="activo" aria-expanded="false">
               <i data-feather="trello" class="feather-icon"></i>
@@ -345,6 +346,7 @@
                   routerLinkActive="activo"
                   class="sidebar-link"
                 >
+                  <i data-feather="database" class="feather-icon"></i>
                   <span class="hide-menu">
                     Productos
                   </span>
@@ -352,10 +354,11 @@
               </li>
               <li class="sidebar-item">
                 <a
-                  routerLink="categorys"
+                  routerLink="categories"
                   routerLinkActive="activo"
                   class="sidebar-link"
                 >
+                  <i data-feather="layout" class="feather-icon"></i>
                   <span class="hide-menu">
                     Categoria
                   </span>
@@ -363,13 +366,13 @@
               </li>
               <li class="sidebar-item">
                 <a
-                  routerLink="formats"
-                  routerLinkActive="activo"
                   class="sidebar-link"
+                  routerLink="clients"
+                  routerLinkActive="activo"
+                  aria-expanded="false"
                 >
-                  <span class="hide-menu">
-                    Formato
-                  </span>
+                  <i data-feather="users" class="feather-icon"></i>
+                  <span class="hide-menu">Clientes</span>
                 </a>
               </li>
             </ul>

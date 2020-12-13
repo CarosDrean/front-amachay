@@ -233,7 +233,7 @@
               <label for="dni">DNI</label>
               <input
                 class="form-control"
-                type="text"
+                type="number"
                 id="dni"
                 required=""
                 name="address"
@@ -250,10 +250,10 @@
                 [(ngModel)]="item.role"
               >
                 <option value="Admin">Administrador</option>
-                <option value="Warehouse">Almacenero</option>
+                <option value="User">Almacenero</option>
               </select>
             </div>
-            <div class="form-group col-lg-6" *ngIf="item.role == 'Warehouse'">
+            <div class="form-group col-lg-6" *ngIf="item.role == 'User'">
               <label for="exampleFormControlSelect3">Almacen</label>
               <select
                 class="form-control"

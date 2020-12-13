@@ -21,7 +21,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     feather.replace();
-    MainComponent.loadScript();
+    Utils.loadScript();
     this.getUser();
   }
 
@@ -38,10 +38,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   logOut(): void {
     this.ls.logOut();
-  }
-
-  private static loadScript(): void {
-    Utils.loadScript();
   }
 
 }
