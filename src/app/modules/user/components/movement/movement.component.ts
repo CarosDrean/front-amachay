@@ -9,9 +9,9 @@ import {ProductService} from "../../../../services/product.service";
 import {ClientService} from "../../../../services/client.service";
 import {Product} from "../../../../interfaces/product";
 import {Client} from "../../../../interfaces/client";
-import {of} from "rxjs";
 import {User} from "../../../../interfaces/user";
 import {UserService} from "../../../../services/user.service";
+import {Filter} from "../../../../interfaces/filter";
 
 @Component({
   selector: 'app-movement',
@@ -29,6 +29,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
   user: User;
   products: Product[] = [];
   clients: Client[] = [];
+  movements: Movement[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, public ms: MovementService,
               private nt: NotifierService, private ps: ProductService, private cs: ClientService,
@@ -43,6 +44,25 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
         this.init();
       }
     });
+  }
+
+  getItems() {
+    if (this.user) {
+      this.getItemsFilter();
+    }
+  }
+
+  private getItemsFilter() {
+    const filter: Filter = {
+      _id: this.user.idWarehouse.toString(),
+      type: this.type,
+      dateFrom: this.from,
+      dateTo: this.to
+    };
+    this.subscription.add(this.ms.getItemsFilter(filter).subscribe(() => {
+      this.movements = this.ms.items;
+      console.log(this.movements);
+    }));
   }
 
   private init(): void {
@@ -60,8 +80,15 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
   }
 
   sendForm() {
-    this.item.idClient = this.user._id;
+    const n = this.item.idProduct.toString();
+    this.item.idProduct = +n;
+    const c = this.item.idClient.toString();
+    this.item.idClient = +c;
+    this.item.idUser = this.user._id;
     this.item.idWarehouse = this.user.idWarehouse;
+    if (this.type === 'output') {
+      this.item.quantity = -this.item.quantity;
+    }
     this.addItem(this.item);
   }
 
@@ -85,6 +112,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     const id = sessionStorage.getItem('_id');
     this.subscription.add(this.us.getItem(id).subscribe(() => {
       this.user = this.us.item;
+      this.getItemsFilter();
     }));
   }
 
@@ -101,6 +129,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
   }
 
   updateDate(): void {
+    this.getItemsFilter();
   }
 
 }

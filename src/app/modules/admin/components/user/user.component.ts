@@ -55,7 +55,8 @@ export class UserComponent extends ComponentAbstract implements OnInit {
       lastName: '',
       mail: '',
       name: '',
-      phone: ''
+      phone: '',
+      idWarehouse: -1
     };
   }
 

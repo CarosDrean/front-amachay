@@ -75,7 +75,7 @@
                   [attr.data-index]="i"
                 >
                   <td>{{ i + 1 }}</td>
-                  <td>{{ item.idProduct }}</td>
+                  <td>{{ item.product }}</td>
                   <td>{{item.quantity}}</td>
                   <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
                   <td>
@@ -157,7 +157,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="quantity">Catidad</label>
+            <label for="quantity">Cantidad</label>
             <input
               class="form-control"
               type="number"

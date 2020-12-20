@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {Observable} from "rxjs";
+import {Filter} from "../interfaces/filter";
 
 export abstract class Service {
 
@@ -19,6 +20,14 @@ export abstract class Service {
 
   getItemsAllIdRuta(_id: string, ruta: string): Observable<any> {
     return this.http.get(this.URL_API + `${ruta}/${_id}`).pipe(
+      map((items: any[]) => {
+        this.items = items;
+      })
+    );
+  }
+
+  getItemsFilter(filter: Filter): Observable<any> {
+    return this.http.post(this.URL_API + 'filter/', filter).pipe(
       map((items: any[]) => {
         this.items = items;
       })
