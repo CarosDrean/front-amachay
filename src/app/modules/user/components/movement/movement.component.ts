@@ -61,7 +61,6 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     };
     this.subscription.add(this.ms.getItemsFilter(filter).subscribe(() => {
       this.movements = this.ms.items;
-      console.log(this.movements);
     }));
   }
 
@@ -77,6 +76,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.case = 'Editar';
     this.idEdit = item._id;
     this.item = Object.assign({}, item);
+    this.item.date = Utils.dateToString(new Date(this.item.date))
   }
 
   sendForm() {
@@ -87,7 +87,9 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.item.idUser = this.user._id;
     this.item.idWarehouse = this.user.idWarehouse;
     if (this.type === 'output') {
-      this.item.quantity = -this.item.quantity;
+      if (this.item.quantity > 0) {
+        this.item.quantity = -this.item.quantity;
+      }
     }
     this.addItem(this.item);
   }
@@ -104,7 +106,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
   }
 
   private getDateToday(): void {
-    this.from = Utils.dateString();
+    this.from = Utils.dateString(1);
     this.to = Utils.dateString();
   }
 
