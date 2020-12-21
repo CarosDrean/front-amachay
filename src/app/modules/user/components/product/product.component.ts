@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Product} from "../../../../interfaces/product";
 import {ComponentAbstract} from "../../../../api/component";
 import {NotifierService} from "angular-notifier";
 import {ProductService} from "../../../../services/product.service";
 import {CategoryService} from "../../../../services/category.service";
 import {Category} from "../../../../interfaces/category";
-import {of} from "rxjs";
 import {User} from "../../../../interfaces/user";
 import {UserService} from "../../../../services/user.service";
 
@@ -14,7 +13,7 @@ import {UserService} from "../../../../services/user.service";
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent extends ComponentAbstract implements OnInit {
+export class ProductComponent extends ComponentAbstract implements OnInit, OnDestroy {
 
   case = 'Nuevo';
   title = 'Producto';
@@ -30,6 +29,10 @@ export class ProductComponent extends ComponentAbstract implements OnInit {
   ngOnInit(): void {
     this.getCategories();
     this.getUser();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
   }
 
   getItems() {

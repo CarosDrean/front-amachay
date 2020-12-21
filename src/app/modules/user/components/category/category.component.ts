@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Category} from "../../../../interfaces/category";
 import {ComponentAbstract} from "../../../../api/component";
 import {NotifierService} from "angular-notifier";
@@ -9,7 +9,7 @@ import {CategoryService} from "../../../../services/category.service";
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
-export class CategoryComponent extends ComponentAbstract implements OnInit {
+export class CategoryComponent extends ComponentAbstract implements OnInit, OnDestroy {
 
   case = 'Nueva';
   title = 'Categoria';
@@ -20,6 +20,10 @@ export class CategoryComponent extends ComponentAbstract implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
   }
 
   edit(item: any) {

@@ -22,17 +22,20 @@ export abstract class ComponentAbstract{
   addItem(item: any): void {
     $('#form-user').modal('hide');
     if (this.idEdit !== '') {
-      this.subscription.add(this.service.updateItem(item).subscribe((res) => {
-        const response = JSON.stringify(res);
+      this.service.updateItem(item).subscribe((res) => {
+        console.log('hey')
+        // const response = JSON.stringify(res);
         this.nts.notify('success', 'Actualizando...' );
         this.getItems();
-      }));
+      }, error => {
+        console.log(error)
+      })
     } else {
-      this.subscription.add(this.service.createItem(item).subscribe((res) => {
+      this.service.createItem(item).subscribe((res) => {
         const response = JSON.stringify(res);
         this.nts.notify('success', 'Creando...' );
         this.getItems();
-      }));
+      })
     }
     this.clean();
   }
