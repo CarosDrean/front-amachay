@@ -19,25 +19,36 @@ export abstract class ComponentAbstract{
     this.subscription.add(this.service.getItems().subscribe());
   }
 
-  addItem(item: any): void {
+  hideModal(): void {
     $('#form-user').modal('hide');
-    if (this.idEdit !== '') {
-      this.service.updateItem(item).subscribe((res) => {
-        console.log('hey')
-        // const response = JSON.stringify(res);
-        this.nts.notify('success', 'Actualizando...' );
-        this.getItems();
-      }, error => {
-        console.log(error)
-      })
-    } else {
-      this.service.createItem(item).subscribe((res) => {
-        const response = JSON.stringify(res);
-        this.nts.notify('success', 'Creando...' );
-        this.getItems();
-      })
-    }
-    this.clean();
+  }
+
+  addItem(item: any): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      if (this.idEdit !== '') {
+        this.service.updateItem(item).subscribe((res) => {
+          this.hideModal()
+          this.nts.notify('success', 'Actualizando...' );
+          this.getItems()
+          resolve('Creado con exito');
+        }, error => {
+          this.nts.notify('error', '¡Hubo un error al actualizar!' );
+          reject(error);
+        })
+      } else {
+        this.service.createItem(item).subscribe((res) => {
+          this.hideModal()
+          const response = JSON.stringify(res);
+          this.nts.notify('success', 'Creando...' );
+          this.getItems()
+          resolve('Actualizado con exito');
+        }, error => {
+          this.nts.notify('error', '¡Hubo un error al actualizar!' );
+          reject(error);
+        })
+      }
+      this.clean();
+    })
   }
 
   deleteItem(): void {
@@ -46,6 +57,8 @@ export abstract class ComponentAbstract{
       this.nts.notify('error', 'Eliminando...' );
       this.getItems();
       this.clean();
+    }, error => {
+      this.nts.notify('error', '¡Hubo un error al eliminar!' );
     }));
   }
 

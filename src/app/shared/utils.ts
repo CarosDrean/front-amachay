@@ -2,7 +2,7 @@ declare var $: any;
 
 export class Utils {
 
-  static dateToString(date: Date): string {
+  static dateToString(date = new Date()): string {
     return date.getFullYear() + '-' + Utils.forDate((date.getMonth() + 1)) + '-' + Utils.forDate(date.getDate());
   }
 

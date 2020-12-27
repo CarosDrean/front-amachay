@@ -3,15 +3,17 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpHeaders
+  HttpInterceptor, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {LoginService} from "../services/login.service";
+import {NotifierService} from "angular-notifier";
+import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class InterceptorInterceptor implements HttpInterceptor {
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector, private nts: NotifierService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authService = this.injector.get(LoginService);
@@ -26,6 +28,12 @@ export class InterceptorInterceptor implements HttpInterceptor {
     const reqClone = req.clone({
       headers
     });
-    return next.handle(reqClone);
+    return next.handle(reqClone).pipe(catchError(InterceptorInterceptor.manageError));
   }
+
+  private static manageError(error: HttpErrorResponse){
+    console.log(error.error.text);
+    return throwError('Error Interceptado')
+  }
+
 }
