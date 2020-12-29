@@ -16,6 +16,10 @@ import {ProductService} from "./services/product.service";
 import {UserService} from "./services/user.service";
 import {WarehouseService} from "./services/warehouse.service";
 import {FormsModule} from "@angular/forms";
+import {StoreModule} from "@ngrx/store";
+import {appEffects, REDUCER_TOKEN} from "./store";
+import {handleUndo} from "ngrx-undo";
+import {EffectsModule} from "@ngrx/effects";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -70,6 +74,8 @@ const customNotifierOptions: NotifierOptions = {
     HttpClientModule,
     NotifierModule.withConfig(customNotifierOptions),
     SweetAlert2Module.forRoot(),
+    StoreModule.forRoot(REDUCER_TOKEN, { metaReducers: [handleUndo]}),
+    EffectsModule.forRoot([...appEffects])
   ],
   providers: [
     {

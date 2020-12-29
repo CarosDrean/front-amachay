@@ -7,6 +7,8 @@ import {CategoryService} from "../../../../services/category.service";
 import {Category} from "../../../../interfaces/category";
 import {User} from "../../../../interfaces/user";
 import {UserService} from "../../../../services/user.service";
+import {SEARCH} from "../../../../store/search/search.reducer";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-product',
@@ -21,9 +23,20 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   products: Product[] = [];
   categories: Category[] = [];
   private user: User;
+  filter = 'all';
+  temp = [];
+  aux = [];
 
-  constructor(public ps: ProductService, private nt: NotifierService, private cs: CategoryService, private us: UserService) {
+  constructor(public ps: ProductService, private nt: NotifierService, private cs: CategoryService,
+              private us: UserService, private store: Store<any>) {
     super(ps, nt);
+    this.subscription.add(store.select(SEARCH).subscribe(data => {
+      let text = 'all';
+      if (data !== ''){
+        text = data;
+      }
+      this.search(text);
+    }));
   }
 
   ngOnInit(): void {
@@ -35,6 +48,14 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     this.subscription.unsubscribe()
   }
 
+  search(val: string): void {
+    this.filter = 'all';
+    this.products = this.temp;
+    if (val !== 'all') {
+      this.products = this.products.filter(data => data.name.toLowerCase().indexOf(val) !== -1 || !val);
+    }
+  }
+
   getItems() {
     if (this.user) {
       this.getProductsStock(this.user.idWarehouse);
@@ -44,6 +65,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   getProductsStock(idWarehouse: number): void {
     this.ps.getItemsAllId(idWarehouse.toString()).subscribe(() => {
       this.products = this.ps.items;
+      this.temp = this.products;
     });
   }
 

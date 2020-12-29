@@ -39,8 +39,13 @@ export class UserComponent extends ComponentAbstract implements OnInit {
   }
 
   sendForm() {
-    const n = this.item.idWarehouse.toString();
-    this.item.idWarehouse = +n;
+    if (this.item.idWarehouse !== -1 && this.item.idWarehouse !== 0) {
+      const n = this.item.idWarehouse.toString();
+      this.item.idWarehouse = +n;
+    } else if (this.item.idWarehouse === 0) {
+      this.item.idWarehouse = -1;
+    }
+
     this.addItem(this.item);
   }
 
