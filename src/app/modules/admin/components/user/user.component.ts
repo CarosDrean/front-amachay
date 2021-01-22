@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ComponentAbstract} from "../../../../api/component";
-import {User} from "../../../../interfaces/user";
-import {NotifierService} from "angular-notifier";
-import {UserService} from "../../../../services/user.service";
-import {WarehouseService} from "../../../../services/warehouse.service";
-import {Warehouse} from "../../../../interfaces/warehouse";
+import {ComponentAbstract} from '../../../../api/component';
+import {User} from '../../../../interfaces/user';
+import {NotifierService} from 'angular-notifier';
+import {UserService} from '../../../../services/user.service';
+import {WarehouseService} from '../../../../services/warehouse.service';
+import {Warehouse} from '../../../../interfaces/warehouse';
 
 @Component({
   selector: 'app-user',

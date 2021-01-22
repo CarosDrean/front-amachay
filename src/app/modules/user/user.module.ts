@@ -11,6 +11,8 @@ import {NotifierModule, NotifierOptions} from "angular-notifier";
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import { CategoryComponent } from './components/category/category.component';
 import {FormsModule} from "@angular/forms";
+import { MeasureComponent } from './components/measure/measure.component';
+import { ProviderComponent } from './components/provider/provider.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -54,7 +56,7 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-  declarations: [DashboardComponent, MainComponent, MovementComponent, ClientComponent, ProductComponent, CategoryComponent],
+  declarations: [DashboardComponent, MainComponent, MovementComponent, ClientComponent, ProductComponent, CategoryComponent, MeasureComponent, ProviderComponent],
     imports: [
         CommonModule,
         UserRoutingModule,

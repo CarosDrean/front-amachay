@@ -1,25 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './modules/login/login.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {LoginComponent} from './modules/login/login.component';
 import {NotifierModule, NotifierOptions} from 'angular-notifier';
-import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {InterceptorInterceptor} from "./interceptors/interceptor.interceptor";
-import {CategoryService} from "./services/category.service";
-import {ClientService} from "./services/client.service";
-import {LoginService} from "./services/login.service";
-import {MovementService} from "./services/movement.service";
-import {ProductService} from "./services/product.service";
-import {UserService} from "./services/user.service";
-import {WarehouseService} from "./services/warehouse.service";
-import {FormsModule} from "@angular/forms";
-import {StoreModule} from "@ngrx/store";
-import {appEffects, REDUCER_TOKEN} from "./store";
-import {handleUndo} from "ngrx-undo";
-import {EffectsModule} from "@ngrx/effects";
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {InterceptorInterceptor} from './interceptors/interceptor.interceptor';
+import {CategoryService} from './services/category.service';
+import {ClientService} from './services/client.service';
+import {LoginService} from './services/login.service';
+import {MovementService} from './services/movement.service';
+import {ProductService} from './services/product.service';
+import {UserService} from './services/user.service';
+import {WarehouseService} from './services/warehouse.service';
+import {FormsModule} from '@angular/forms';
+import {StoreModule} from '@ngrx/store';
+import {appEffects, REDUCER_TOKEN} from './store';
+import {handleUndo} from 'ngrx-undo';
+import {EffectsModule} from '@ngrx/effects';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -74,7 +74,7 @@ const customNotifierOptions: NotifierOptions = {
     HttpClientModule,
     NotifierModule.withConfig(customNotifierOptions),
     SweetAlert2Module.forRoot(),
-    StoreModule.forRoot(REDUCER_TOKEN, { metaReducers: [handleUndo]}),
+    StoreModule.forRoot(REDUCER_TOKEN, {metaReducers: [handleUndo]}),
     EffectsModule.forRoot([...appEffects])
   ],
   providers: [
@@ -93,4 +93,5 @@ const customNotifierOptions: NotifierOptions = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
