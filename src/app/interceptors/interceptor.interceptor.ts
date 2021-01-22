@@ -15,6 +15,12 @@ export class InterceptorInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector, private nts: NotifierService) { }
 
+  // tslint:disable-next-line:typedef
+  static manageError(error: HttpErrorResponse){
+    console.log(error.error);
+    return throwError(error)
+  }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authService = this.injector.get(LoginService);
 
@@ -29,11 +35,6 @@ export class InterceptorInterceptor implements HttpInterceptor {
       headers
     });
     return next.handle(reqClone).pipe(catchError(InterceptorInterceptor.manageError));
-  }
-
-  private static manageError(error: HttpErrorResponse){
-    console.log(error.error.text);
-    return throwError('Error Interceptado')
   }
 
 }

@@ -20,6 +20,8 @@ import {StoreModule} from '@ngrx/store';
 import {appEffects, REDUCER_TOKEN} from './store';
 import {handleUndo} from 'ngrx-undo';
 import {EffectsModule} from '@ngrx/effects';
+import {MeasureService} from './services/measure.service';
+import {ProviderService} from './services/provider.service';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -90,6 +92,8 @@ const customNotifierOptions: NotifierOptions = {
     ProductService,
     UserService,
     WarehouseService,
+    MeasureService,
+    ProviderService,
   ],
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,8 @@ import {CategoryComponent} from "./components/category/category.component";
 import {ProductComponent} from "./components/product/product.component";
 import {MainComponent} from "./components/main/main.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {MeasureComponent} from './components/measure/measure.component';
+import {ProviderComponent} from './components/provider/provider.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,8 @@ const routes: Routes = [
           { path: 'movements/:type', component: MovementComponent },
           { path: 'categories', component: CategoryComponent },
           { path: 'products', component: ProductComponent },
+          { path: 'measure', component: MeasureComponent },
+          { path: 'provider', component: ProviderComponent },
           { path: '**', pathMatch: 'full', redirectTo: 'dashboard' },
         ]
       }
