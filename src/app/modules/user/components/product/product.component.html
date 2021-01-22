@@ -52,8 +52,9 @@
                   <th>#</th>
                   <th>Nombre</th>
                   <th>Descripcion</th>
-                  <th>Preccio</th>
+                  <th>Precio</th>
                   <th>Stock</th>
+                  <th>Unidad de Medida</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
@@ -67,6 +68,7 @@
                   <td>{{item.description}}</td>
                   <td>{{item.price}}</td>
                   <th>{{item.stock}}</th>
+                  <th>{{item.measure}}</th>
                   <td>
                     <button
                       type="button"
@@ -178,6 +180,41 @@
               name="price"
               [(ngModel)]="item.price"
               placeholder="5.5"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">Unidad de Medida</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect2"
+              name="measure"
+              [(ngModel)]="item.idMeasure"
+            >
+              <option *ngFor="let item of measures" value="{{item._id}}">{{item.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="unity">Equivalente en Unidad</label>
+            <input
+              class="form-control"
+              type="number"
+              id="unity"
+              required=""
+              name="unity"
+              [(ngModel)]="item.unity"
+              placeholder="5"
+            />
+          </div>
+          <div class="form-group">
+            <label for="alert">Minimo (Para Alerta)</label>
+            <input
+              class="form-control"
+              type="number"
+              id="alert"
+              required=""
+              name="alert"
+              [(ngModel)]="item.minAlert"
+              placeholder="5"
             />
           </div>
         </form>
