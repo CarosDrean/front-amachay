@@ -65,6 +65,7 @@
                   <th>#</th>
                   <th>Producto</th>
                   <th>Catidad</th>
+                  <th>Medida</th>
                   <th>Fecha</th>
                   <th>Acciones</th>
                 </tr>
@@ -77,6 +78,7 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.product }}</td>
                   <td>{{item.quantity}}</td>
+                  <td>{{item.measure}}</td>
                   <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
                   <td>
                     <button
@@ -152,14 +154,20 @@
               id="exampleFormControlSelect1"
               name="role"
               [(ngModel)]="item.idProduct"
+              (change)="changeProduct()"
             >
               <option *ngFor="let p of products" value="{{p._id}}">{{p.name}}</option>
             </select>
+            <small *ngIf="type != 'input' && stock == 0"
+                   id="textHelp4" class="badge badge-default badge-danger form-text text-white float-left">Sin Stock Disponible</small>
+            <small *ngIf="stock != 0" id="textHelp5"
+                   class="badge badge-default badge-info form-text text-white float-left">{{stock}} {{measure}}</small>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="margin-top: 35px">
             <label for="quantity">Cantidad</label>
             <input
               class="form-control"
+              [ngClass]="type != 'input' && stock < item.quantity ? 'is-invalid red' : ''"
               type="number"
               id="quantity"
               required=""
@@ -167,8 +175,9 @@
               [(ngModel)]="item.quantity"
               placeholder="25"
             />
+            <small id="textHelp3" class="form-text text-muted">{{measure}}</small>
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="type != 'input'">
             <label for="exampleFormControlSelect2">Cliente</label>
             <select
               class="form-control"
@@ -177,6 +186,17 @@
               [(ngModel)]="item.idClient"
             >
               <option *ngFor="let c of clients" value="{{c._id}}">{{c.name}} {{c.lastName}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="type == 'input'">
+            <label for="exampleFormControlSelect4">Proveedor</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect4"
+              name="role"
+              [(ngModel)]="item.idProvider"
+            >
+              <option *ngFor="let c of providers" value="{{c._id}}">{{c.name}}</option>
             </select>
           </div>
           <div class="form-group">
