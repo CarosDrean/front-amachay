@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Client} from "../../../../interfaces/client";
-import {ComponentAbstract} from "../../../../api/component";
-import {NotifierService} from "angular-notifier";
-import {ClientService} from "../../../../services/client.service";
+import {Client} from '../../../../interfaces/client';
+import {ComponentAbstract} from '../../../../api/component';
+import {NotifierService} from 'angular-notifier';
+import {ClientService} from '../../../../services/client.service';
 
 @Component({
   selector: 'app-client',
@@ -22,18 +22,18 @@ export class ClientComponent extends ComponentAbstract implements OnInit {
   ngOnInit(): void {
   }
 
-  edit(item: any) {
+  edit(item: any): void {
     this.case = 'Editar';
     this.idEdit = item._id;
     this.item = Object.assign({}, item);
   }
 
-  sendForm() {
+  sendForm(): void {
     this.item.dni = this.item.dni.toString();
     this.addItem(this.item);
   }
 
-  resetItem() {
+  resetItem(): void {
     this.item = {
       address: '',
       cel: '',
