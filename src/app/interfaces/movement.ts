@@ -10,4 +10,8 @@ export interface Movement {
   date: string;
   quantity: number;
   type: string;
+
+  lot?: string
+  dueDate?: string
+  state?: boolean
 }

@@ -28,6 +28,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
 
   measure = 'Unidad de Medida'
   stock = 0
+  perishable = false
 
   case = 'Nueva';
   item: Movement;
@@ -62,7 +63,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     const product = this.products.find(e => e._id.toString() === this.item.idProduct.toString())
     this.measure = product.measure
     this.stock = product.stock
-    console.log(product)
+    this.perishable = product.perishable
   }
 
   private getItemsFilter(): void {
@@ -83,6 +84,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.getDateToday();
     this.getClients();
     this.getProviders()
+    this.perishable = false
   }
 
   edit(item: any): void {
@@ -90,6 +92,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.idEdit = item._id;
     this.item = Object.assign({}, item);
     this.item.date = Utils.dateToString(new Date(this.item.date))
+    console.log(this.item)
   }
 
   sendForm(): void {
@@ -101,7 +104,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.item.idProvider = +p;
     this.item.idUser = this.user._id;
     this.item.idWarehouse = this.user.idWarehouse;
-    if (this.type !== 'input' && this.stock === 0 && this.item.quantity > this.stock) {
+    if (this.type !== 'input' && this.item.quantity > this.stock) {
       this.nt.notify('error', '¡No Cuenta con Stock Disponible!')
       return
     }
@@ -109,6 +112,9 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
       if (this.item.quantity > 0) {
         this.item.quantity = -this.item.quantity;
       }
+    }
+    if (this.type === 'input' && this.perishable) {
+      this.item.state = true
     }
 
     this.addItem(this.item).then(e => {
@@ -125,7 +131,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
       quantity: 1,
       type: this.type,
       idClient: 0,
-      idProvider: 0
+      idProvider: 0,
     };
   }
 

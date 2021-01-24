@@ -11,4 +11,5 @@ export interface Product {
   measure?: string
   unity?: number
   minAlert?: number
+  perishable?: boolean
 }

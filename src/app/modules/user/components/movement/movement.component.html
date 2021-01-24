@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<div class="container-fluid" style="padding: 30px;">
+<div class="container-fluid" style="padding: 30px; padding-top: 0 !important;">
   <div class="row">
     <div>
       <button
@@ -152,7 +152,7 @@
             <select
               class="form-control"
               id="exampleFormControlSelect1"
-              name="role"
+              name="product"
               [(ngModel)]="item.idProduct"
               (change)="changeProduct()"
             >
@@ -182,7 +182,7 @@
             <select
               class="form-control"
               id="exampleFormControlSelect2"
-              name="role"
+              name="client"
               [(ngModel)]="item.idClient"
             >
               <option *ngFor="let c of clients" value="{{c._id}}">{{c.name}} {{c.lastName}}</option>
@@ -193,10 +193,10 @@
             <select
               class="form-control"
               id="exampleFormControlSelect4"
-              name="role"
+              name="provider"
               [(ngModel)]="item.idProvider"
             >
-              <option *ngFor="let c of providers" value="{{c._id}}">{{c.name}}</option>
+              <option *ngFor="let c of providers" [ngValue]="c._id">{{c.name}}</option>
             </select>
           </div>
           <div class="form-group">
@@ -208,6 +208,29 @@
               value="2018-05-13"
               [(ngModel)]="item.date"
               name="from"
+            />
+          </div>
+          <div *ngIf="perishable" class="form-group">
+            <label for="lot">Lote</label>
+            <input
+              class="form-control"
+              type="text"
+              id="lot"
+              required=""
+              name="lot"
+              [(ngModel)]="item.lot"
+              placeholder="A-25"
+            />
+          </div>
+          <div *ngIf="perishable" class="form-group">
+            <label for="dateV">Fecha de Vencimiento</label>
+            <input
+              id="dateV"
+              type="date"
+              class="form-control"
+              value="2018-05-13"
+              [(ngModel)]="item.dueDate"
+              name="due"
             />
           </div>
         </form>

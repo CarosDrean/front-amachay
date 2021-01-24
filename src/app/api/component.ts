@@ -1,6 +1,6 @@
 import { Service } from './service';
-import {NotifierService} from "angular-notifier";
-import {Subscription} from "rxjs";
+import {NotifierService} from 'angular-notifier';
+import {Subscription} from 'rxjs';
 
 declare var $: any;
 

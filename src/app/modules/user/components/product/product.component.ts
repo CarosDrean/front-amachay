@@ -11,7 +11,11 @@ import {SEARCH} from '../../../../store/search/search.reducer';
 import {Store} from '@ngrx/store';
 import {Measure} from '../../../../interfaces/measure';
 import {MeasureService} from '../../../../services/measure.service';
-import {Subscription} from 'rxjs';
+import {MovementService} from '../../../../services/movement.service';
+import {Filter} from '../../../../interfaces/filter';
+import {Movement} from '../../../../interfaces/movement';
+
+declare var $: any;
 
 @Component({
   selector: 'app-product',
@@ -23,16 +27,19 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   case = 'Nuevo';
   title = 'Producto';
   item: Product;
+  idWarehouse: number
   products: Product[] = [];
   categories: Category[] = [];
   measures: Measure[] = []
+  lots: Movement[] = []
   private user: User;
   filter = 'all';
   temp = [];
   aux = [];
 
   constructor(public ps: ProductService, private nt: NotifierService, private cs: CategoryService,
-              private us: UserService, private store: Store<any>, private ms: MeasureService) {
+              private us: UserService, private store: Store<any>, private ms: MeasureService,
+              private mvs: MovementService) {
     super(ps, nt);
     this.subscription.add(store.select(SEARCH).subscribe(data => {
       let text = 'all';
@@ -71,6 +78,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   getProductsStock(idWarehouse: number): void {
     this.ps.getItemsAllId(idWarehouse.toString()).subscribe(() => {
       this.products = this.ps.items;
+      this.products = this.products.sort((a, b) => a.stock > b.stock ? 1 : -1)
       this.temp = this.products;
     });
   }
@@ -79,6 +87,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     const id = sessionStorage.getItem('_id');
     this.subscription.add(this.us.getItem(id).subscribe(() => {
       this.user = this.us.item
+      this.idWarehouse = this.user.idWarehouse
       this.getProductsStock(this.user.idWarehouse)
     }))
   }
@@ -95,6 +104,20 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     }))
   }
 
+  getLots(idProduct: number): void {
+    const filter: Filter = {
+      _id: idProduct.toString(),
+      auxId: this.idWarehouse.toString()
+    }
+    this.mvs.getItemsAllLotsWarehouse(filter).subscribe(() => {
+      this.lots = this.mvs.items
+    })
+  }
+
+  closeLots(): void {
+    $('#form-lot').modal('hide');
+  }
+
   edit(item: any): void {
     this.case = 'Editar';
     this.idEdit = item._id;
@@ -106,7 +129,6 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     this.item.idCategory = +n;
     const n2 = this.item.idMeasure.toString();
     this.item.idMeasure = +n2;
-    console.log(this.item)
     this.addItem(this.item);
   }
 
@@ -116,7 +138,8 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
       description: '',
       idCategory: 0,
       price: 0,
-      stock: 0
+      stock: 0,
+      perishable: false
     };
   }
 
