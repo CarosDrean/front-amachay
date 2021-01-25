@@ -307,6 +307,7 @@
                       <th>Stock</th>
                       <th>Medida</th>
                       <th>Fecha de Vencimiento</th>
+                      <th>Estado</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -319,7 +320,34 @@
                       <td>{{item.lot}}</td>
                       <th>{{item.quantity}}</th>
                       <th>{{item.measure}}</th>
-                      <th>{{item.dueDate}}</th>
+                      <th>{{item.dueDate | date: 'dd/MM/yyyy'}}</th>
+                      <td>
+                        {{dueDateCompare(item.dueDate)}}
+                        <button
+                          *ngIf="dateRes > 10"
+                          type="button"
+                          class="btn waves-effect waves-light btn-rounded btn-sm btn-success"
+                          style="margin-right: 5px; cursor: text"
+                        >
+                          Disponible
+                        </button>
+                        <button
+                          *ngIf="dateRes < 9 && dateRes > 0"
+                          type="button"
+                          class="btn waves-effect waves-light btn-rounded btn-sm btn-warning"
+                          style="margin-right: 5px; cursor: text"
+                        >
+                          Por Vencerse
+                        </button>
+                        <button
+                          *ngIf="dateRes <= 0"
+                          type="button"
+                          class="btn waves-effect waves-light btn-rounded btn-sm btn-danger"
+                          style="margin-right: 5px; cursor: text"
+                        >
+                          Vencido
+                        </button>
+                      </td>
                     </tr>
                     </tbody>
                   </table>

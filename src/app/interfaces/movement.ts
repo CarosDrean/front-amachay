@@ -14,4 +14,5 @@ export interface Movement {
   lot?: string
   dueDate?: string
   state?: boolean
+  perishable?: boolean
 }

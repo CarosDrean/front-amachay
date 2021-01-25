@@ -92,6 +92,10 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.idEdit = item._id;
     this.item = Object.assign({}, item);
     this.item.date = Utils.dateToString(new Date(this.item.date))
+    if (this.item.perishable) {
+      this.perishable = this.item.perishable
+      this.item.dueDate = Utils.dateToString(new Date(this.item.dueDate))
+    }
     console.log(this.item)
   }
 

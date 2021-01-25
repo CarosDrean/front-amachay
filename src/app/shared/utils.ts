@@ -8,13 +8,8 @@ export class Utils {
 
   static dateString(back: number = 0): string {
     const date = new Date();
-    let m = date.getMonth() - back;
-    let y = date.getFullYear();
-    if (m < 0) {
-      m = 11 + m;
-      y--;
-    }
-    return y + '-' + Utils.forDate((m + 1)) + '-' + Utils.forDate(date.getDate());
+    date.setMonth(date.getMonth() - back);
+    return date.getFullYear() + '-' + Utils.forDate((date.getMonth() + 1)) + '-' + Utils.forDate(date.getDate());
   }
 
   static forDate(n: number): string {

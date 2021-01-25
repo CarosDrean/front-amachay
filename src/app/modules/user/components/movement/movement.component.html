@@ -210,7 +210,7 @@
               name="from"
             />
           </div>
-          <div *ngIf="perishable" class="form-group">
+          <div *ngIf="perishable || item.perishable" class="form-group">
             <label for="lot">Lote</label>
             <input
               class="form-control"
@@ -222,7 +222,7 @@
               placeholder="A-25"
             />
           </div>
-          <div *ngIf="perishable" class="form-group">
+          <div *ngIf="perishable || item.perishable" class="form-group">
             <label for="dateV">Fecha de Vencimiento</label>
             <input
               id="dateV"

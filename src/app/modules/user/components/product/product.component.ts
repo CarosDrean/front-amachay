@@ -14,6 +14,7 @@ import {MeasureService} from '../../../../services/measure.service';
 import {MovementService} from '../../../../services/movement.service';
 import {Filter} from '../../../../interfaces/filter';
 import {Movement} from '../../../../interfaces/movement';
+import {Utils} from '../../../../shared/utils';
 
 declare var $: any;
 
@@ -36,6 +37,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   filter = 'all';
   temp = [];
   aux = [];
+  dateRes: number;
 
   constructor(public ps: ProductService, private nt: NotifierService, private cs: CategoryService,
               private us: UserService, private store: Store<any>, private ms: MeasureService,
@@ -73,6 +75,13 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     if (this.user) {
       this.getProductsStock(this.user.idWarehouse);
     }
+  }
+
+  dueDateCompare(dueDateS: string): void {
+    const dueDate = new Date(dueDateS)
+    const date = new Date()
+    const res = dueDate.getTime() - date.getTime();
+    this.dateRes = res / (60 * 60 * 24 * 1000)
   }
 
   getProductsStock(idWarehouse: number): void {
