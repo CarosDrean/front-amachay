@@ -6,6 +6,13 @@ export class Utils {
     return date.getFullYear() + '-' + Utils.forDate((date.getMonth() + 1)) + '-' + Utils.forDate(date.getDate());
   }
 
+  static dueDateCompare(dueDateS: string): number {
+    const dueDate = new Date(dueDateS)
+    const date = new Date()
+    const res = dueDate.getTime() - date.getTime();
+    return res / (60 * 60 * 24 * 1000)
+  }
+
   static dateString(back: number = 0): string {
     const date = new Date();
     date.setMonth(date.getMonth() - back);

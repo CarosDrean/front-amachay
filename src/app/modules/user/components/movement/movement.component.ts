@@ -25,6 +25,10 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
   type = '';
   from: string;
   to: string;
+  idWarehouse: number
+  stockLot = 0
+  stockBase = 0
+  lots: Movement[] = []
 
   measure = 'Unidad de Medida'
   stock = 0
@@ -63,7 +67,15 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     const product = this.products.find(e => e._id.toString() === this.item.idProduct.toString())
     this.measure = product.measure
     this.stock = product.stock
+    this.stockBase = this.stock
     this.perishable = product.perishable
+    this.getLots(product._id)
+  }
+
+  changeLot(): void {
+    const lot = this.lots.find(e => e.lot === this.item.lot)
+    this.stockLot = lot.quantity
+    this.stockBase = this.stockLot
   }
 
   private getItemsFilter(): void {
@@ -108,7 +120,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.item.idProvider = +p;
     this.item.idUser = this.user._id;
     this.item.idWarehouse = this.user.idWarehouse;
-    if (this.type !== 'input' && this.item.quantity > this.stock) {
+    if (this.type !== 'input' && this.item.quantity > this.stockBase) {
       this.nt.notify('error', '¡No Cuenta con Stock Disponible!')
       return
     }
@@ -144,10 +156,25 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.to = Utils.dateString();
   }
 
+  getLots(idProduct: number): void {
+    const filter: Filter = {
+      _id: idProduct.toString(),
+      auxId: this.idWarehouse.toString()
+    }
+    this.ms.getItemsAllLotsWarehouse(filter).subscribe(() => {
+      this.lots = this.ms.items
+      console.log(this.lots)
+      this.lots.forEach((e, i) => {
+        this.lots[i].dayDue = Utils.dueDateCompare(e.dueDate)
+      })
+    })
+  }
+
   private getUser(): void {
     const id = sessionStorage.getItem('_id');
     this.subscription.add(this.us.getItem(id).subscribe(() => {
       this.user = this.us.item;
+      this.idWarehouse = this.user.idWarehouse
       this.getItemsFilter();
       this.getProducts(this.user.idWarehouse.toString())
     }));

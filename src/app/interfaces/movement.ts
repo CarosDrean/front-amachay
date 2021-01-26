@@ -15,4 +15,5 @@ export interface Movement {
   dueDate?: string
   state?: boolean
   perishable?: boolean
+  dayDue?: number
 }

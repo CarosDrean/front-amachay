@@ -37,7 +37,6 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   filter = 'all';
   temp = [];
   aux = [];
-  dateRes: number;
 
   constructor(public ps: ProductService, private nt: NotifierService, private cs: CategoryService,
               private us: UserService, private store: Store<any>, private ms: MeasureService,
@@ -77,13 +76,6 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     }
   }
 
-  dueDateCompare(dueDateS: string): void {
-    const dueDate = new Date(dueDateS)
-    const date = new Date()
-    const res = dueDate.getTime() - date.getTime();
-    this.dateRes = res / (60 * 60 * 24 * 1000)
-  }
-
   getProductsStock(idWarehouse: number): void {
     this.ps.getItemsAllId(idWarehouse.toString()).subscribe(() => {
       this.products = this.ps.items;
@@ -120,6 +112,9 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     }
     this.mvs.getItemsAllLotsWarehouse(filter).subscribe(() => {
       this.lots = this.mvs.items
+      this.lots.forEach((e, i) => {
+        this.lots[i].dayDue = Utils.dueDateCompare(e.dueDate)
+      })
     })
   }
 

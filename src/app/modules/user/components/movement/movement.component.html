@@ -163,11 +163,24 @@
             <small *ngIf="stock != 0" id="textHelp5"
                    class="badge badge-default badge-info form-text text-white float-left">{{stock}} {{measure}}</small>
           </div>
+          <div class="form-group" *ngIf="type == 'output' && perishable" style="margin-top: 35px">
+            <label for="exampleFormControlSelect5">Lotes</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect5"
+              name="lot"
+              [(ngModel)]="item.lot"
+              (change)="changeLot()"
+            >
+              <option *ngFor="let p of lots" value="{{p.lot}}">{{p.lot}} - {{p.dueDate | date: 'dd/MM/yyyy'}}</option>
+            </select>
+            <small id="textHelp6" [ngClass]="stockLot == 0 ? 'badge-danger' : 'badge-primary'" class="badge badge-default form-text text-white float-left">{{stockLot}}</small>
+          </div>
           <div class="form-group" style="margin-top: 35px">
             <label for="quantity">Cantidad</label>
             <input
               class="form-control"
-              [ngClass]="type != 'input' && stock < item.quantity ? 'is-invalid red' : ''"
+              [ngClass]="type != 'input' && stockBase < item.quantity ? 'is-invalid red' : ''"
               type="number"
               id="quantity"
               required=""
@@ -210,7 +223,7 @@
               name="from"
             />
           </div>
-          <div *ngIf="perishable || item.perishable" class="form-group">
+          <div *ngIf="type == 'input' && (perishable || item.perishable)" class="form-group">
             <label for="lot">Lote</label>
             <input
               class="form-control"
@@ -222,7 +235,7 @@
               placeholder="A-25"
             />
           </div>
-          <div *ngIf="perishable || item.perishable" class="form-group">
+          <div *ngIf="type == 'input' && (perishable || item.perishable)" class="form-group">
             <label for="dateV">Fecha de Vencimiento</label>
             <input
               id="dateV"

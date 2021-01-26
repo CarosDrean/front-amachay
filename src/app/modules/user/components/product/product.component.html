@@ -67,7 +67,7 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.name }}</td>
                   <td>{{item.price}}</td>
-                  <th>{{item.stock}}</th>
+                  <th [ngClass]="item.stock <= item.minAlert ? 'red' : (item.stock - item.minAlert) < 10 ? 'alert': ''">{{item.stock}}</th>
                   <th>{{item.measure}}</th>
                   <th>{{item.stock * item.unity}}</th>
                   <td>
@@ -306,7 +306,7 @@
                       <th>Lote</th>
                       <th>Stock</th>
                       <th>Medida</th>
-                      <th>Fecha de Vencimiento</th>
+                      <th>F.V.</th>
                       <th>Estado</th>
                     </tr>
                     </thead>
@@ -322,9 +322,8 @@
                       <th>{{item.measure}}</th>
                       <th>{{item.dueDate | date: 'dd/MM/yyyy'}}</th>
                       <td>
-                        {{dueDateCompare(item.dueDate)}}
                         <button
-                          *ngIf="dateRes > 10"
+                          *ngIf="item.dayDue > 10"
                           type="button"
                           class="btn waves-effect waves-light btn-rounded btn-sm btn-success"
                           style="margin-right: 5px; cursor: text"
@@ -332,7 +331,7 @@
                           Disponible
                         </button>
                         <button
-                          *ngIf="dateRes < 9 && dateRes > 0"
+                          *ngIf="item.dayDue < 9 && item.dayDue > 0"
                           type="button"
                           class="btn waves-effect waves-light btn-rounded btn-sm btn-warning"
                           style="margin-right: 5px; cursor: text"
@@ -340,7 +339,7 @@
                           Por Vencerse
                         </button>
                         <button
-                          *ngIf="dateRes <= 0"
+                          *ngIf="item.dayDue <= 0"
                           type="button"
                           class="btn waves-effect waves-light btn-rounded btn-sm btn-danger"
                           style="margin-right: 5px; cursor: text"
