@@ -1,6 +1,6 @@
 <div class="page-breadcrumb">
   <div class="row">
-    <div class="col-7 align-self-center">
+    <div class="col-6-lg col-md-6 col-sm-12 align-self-center">
       <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">
         <div>Lista de Facturas</div>
       </h4>
@@ -19,9 +19,22 @@
         </nav>
       </div>
     </div>
-    <div class="col-5 align-self-center">
+    <div class="col-6-lg col-md-6 col-sm-12 align-self-center">
       <div class="customize-input float-right">
-
+        <div class="row" style="margin-top: 1.5em">
+          <div class="col-6">
+            <div class="form-group">
+              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="from" name="from" (change)="updateDate()">
+              <small id="textHelp" class="form-text text-muted">Desde</small>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="to" name="to" (change)="updateDate()">
+              <small id="textHelp2" class="form-text text-muted">Hasta</small>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -53,19 +66,21 @@
                   <th>Nombre</th>
                   <th>Codigo</th>
                   <th>Fecha</th>
+                  <th>Proveedor</th>
                   <th>Factura</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr
-                  *ngFor="let item of is.items; let i = index"
+                  *ngFor="let item of invoices; let i = index"
                   [attr.data-index]="i"
                 >
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.name }}</td>
                   <td>{{ item.code }}</td>
                   <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{item.provider}}</td>
                   <td>
                     <button
                       type="button"
@@ -190,6 +205,17 @@
               id="exampleInputFile"
             />
           </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect4">Proveedor</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect4"
+              name="provider"
+              [(ngModel)]="item.idProvider"
+            >
+              <option *ngFor="let c of providers" [ngValue]="c._id">{{c.name}}</option>
+            </select>
+          </div>
         </form>
       </div>
 
@@ -238,13 +264,13 @@
       </div>
 
       <div class="modal-body">
-        <img [src] = "imageURL" alt = ””>
+        <img [src] = "imageURL" style="width: 100%">
       </div>
 
       <div class="modal-footer">
         <button
           type="button"
-          class="btn btn-light"
+          class="btn btn-primary"
           data-dismiss="modal"
         >
           Cerrar

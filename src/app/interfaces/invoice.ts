@@ -4,4 +4,6 @@ export interface Invoice {
   code: string
   date?: string
   idImage?: string
+  idProvider?: number
+  provider?: string
 }

@@ -14,7 +14,6 @@ import {UserService} from '../../../../services/user.service';
 import {Filter} from '../../../../interfaces/filter';
 import {ProviderService} from '../../../../services/provider.service';
 import {Provider} from '../../../../interfaces/provider';
-import {ApiFilesService} from '../../../../services/api-files.service';
 
 @Component({
   selector: 'app-movement',

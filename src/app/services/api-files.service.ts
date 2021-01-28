@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
@@ -28,7 +28,10 @@ export class ApiFilesService {
     const headers = new HttpHeaders({
       Authorization: token
     });
-    return this.http.get(environment.api_files + '/invoice/' + idImage, {responseType: 'arraybuffer', headers});
+    const params = new HttpParams()
+      .set('name', idImage)
+      .set('token', token)
+    return this.http.get(environment.api_files + '/invoice/', {params, responseType: 'arraybuffer', headers});
   }
 
   uploadInvoice(file: File, token: string): Observable<any> {
