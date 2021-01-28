@@ -48,6 +48,6 @@ export class ApiFilesService {
     const headers = new HttpHeaders({
       Authorization: token
     });
-    return this.http.delete(environment.api_files + `/${idImage}`, {headers});
+    return this.http.delete(environment.api_files + `/invoice/${idImage}`, {headers});
   }
 }
