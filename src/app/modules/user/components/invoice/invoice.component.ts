@@ -9,6 +9,7 @@ import {Provider} from '../../../../interfaces/provider';
 import {ProviderService} from '../../../../services/provider.service';
 import {Store} from '@ngrx/store';
 import {SEARCH} from '../../../../store/search/search.reducer';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-invoice',
@@ -100,7 +101,8 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
   }
 
   showInvoice(idImage: string): void {
-    this.imageURL = 'http://localhost:2000/invoice/?name=' + idImage + '&token=' + this.tokenApiFiles
+    const endpointApiFiles = environment.api_files
+    this.imageURL = endpointApiFiles + '/invoice/?name=' + idImage + '&token=' + this.tokenApiFiles
   }
 
   edit(item: any): void {
@@ -128,7 +130,9 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
   deleteItem(): void {
     this.subscription.add(this.service.deleteItem(this.idDelete).subscribe((res) => {
       const invoice = this.invoices.find(e => e._id = +this.idDelete)
-      this.afs.deleteInvoice(invoice.idImage, this.tokenApiFiles).subscribe()
+      if (invoice.idImage !== undefined) {
+        this.afs.deleteInvoice(invoice.idImage, this.tokenApiFiles).subscribe()
+      }
       const response = JSON.stringify(res);
       this.ns.notify('error', 'Eliminando...' );
       this.getItems();
