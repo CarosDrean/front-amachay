@@ -125,4 +125,17 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
     };
   }
 
+  deleteItem(): void {
+    this.subscription.add(this.service.deleteItem(this.idDelete).subscribe((res) => {
+      const invoice = this.invoices.find(e => e._id = +this.idDelete)
+      this.afs.deleteInvoice(invoice.idImage, this.tokenApiFiles).subscribe()
+      const response = JSON.stringify(res);
+      this.ns.notify('error', 'Eliminando...' );
+      this.getItems();
+      this.clean();
+    }, error => {
+      this.ns.notify('error', '¡Hubo un error al eliminar!' );
+    }));
+  }
+
 }

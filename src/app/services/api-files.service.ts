@@ -43,4 +43,11 @@ export class ApiFilesService {
 
     return this.http.post(environment.api_files + '/invoice/', formData, {headers});
   }
+
+  deleteInvoice(idImage: string, token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: token
+    });
+    return this.http.delete(environment.api_files + `/${idImage}`, {headers});
+  }
 }
