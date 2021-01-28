@@ -22,6 +22,9 @@ export class InterceptorInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.headers.get('Authorization')) {
+      return next.handle(req);
+    }
     const authService = this.injector.get(LoginService);
 
     const token = authService.getToken();

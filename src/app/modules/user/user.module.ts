@@ -13,6 +13,7 @@ import { CategoryComponent } from './components/category/category.component';
 import {FormsModule} from "@angular/forms";
 import { MeasureComponent } from './components/measure/measure.component';
 import { ProviderComponent } from './components/provider/provider.component';
+import { InvoiceComponent } from './components/invoice/invoice.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -56,7 +57,7 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-  declarations: [DashboardComponent, MainComponent, MovementComponent, ClientComponent, ProductComponent, CategoryComponent, MeasureComponent, ProviderComponent],
+  declarations: [DashboardComponent, MainComponent, MovementComponent, ClientComponent, ProductComponent, CategoryComponent, MeasureComponent, ProviderComponent, InvoiceComponent],
     imports: [
         CommonModule,
         UserRoutingModule,

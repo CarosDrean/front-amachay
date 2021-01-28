@@ -22,6 +22,8 @@ import {handleUndo} from 'ngrx-undo';
 import {EffectsModule} from '@ngrx/effects';
 import {MeasureService} from './services/measure.service';
 import {ProviderService} from './services/provider.service';
+import {ApiFilesService} from './services/api-files.service';
+import {InvoiceService} from './services/invoice.service';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -94,6 +96,8 @@ const customNotifierOptions: NotifierOptions = {
     WarehouseService,
     MeasureService,
     ProviderService,
+    ApiFilesService,
+    InvoiceService,
   ],
   bootstrap: [AppComponent]
 })

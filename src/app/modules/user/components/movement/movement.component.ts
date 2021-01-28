@@ -14,6 +14,7 @@ import {UserService} from '../../../../services/user.service';
 import {Filter} from '../../../../interfaces/filter';
 import {ProviderService} from '../../../../services/provider.service';
 import {Provider} from '../../../../interfaces/provider';
+import {ApiFilesService} from '../../../../services/api-files.service';
 
 @Component({
   selector: 'app-movement',
@@ -133,9 +134,9 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
       this.item.state = true
     }
 
-    this.addItem(this.item).then(e => {
+    this.addItem(this.item).then((r) => {
       this.getProducts(this.user.idWarehouse.toString())
-    });
+    })
   }
 
   resetItem(): void {

@@ -8,6 +8,7 @@ import {MainComponent} from "./components/main/main.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {MeasureComponent} from './components/measure/measure.component';
 import {ProviderComponent} from './components/provider/provider.component';
+import {InvoiceComponent} from './components/invoice/invoice.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
           { path: 'products', component: ProductComponent },
           { path: 'measure', component: MeasureComponent },
           { path: 'provider', component: ProviderComponent },
+          { path: 'invoice', component: InvoiceComponent },
           { path: '**', pathMatch: 'full', redirectTo: 'dashboard' },
         ]
       }
