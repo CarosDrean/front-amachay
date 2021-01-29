@@ -25,27 +25,31 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
   to: string;
   uploadedFiles: Array <File>
   tokenApiFiles: string
-  imageURL: any
+  sourceURL: string
   providers: Provider[] = [];
   temp: Invoice[] = []
   invoices: Invoice[] = []
+  isImage = true
+  searchTemp = ''
 
   constructor(public is: InvoiceService, private ns: NotifierService, private afs: ApiFilesService,
               private pds: ProviderService, private store: Store<any>) {
     super(is, ns);
+    this.loginApiFiles()
     this.subscription.add(store.select(SEARCH).subscribe(data => {
       let text = 'all';
       if (data !== ''){
         text = data;
+        this.searchTemp = data
       }
       this.search(text);
     }));
   }
 
   ngOnInit(): void {
-    this.loginApiFiles()
     this.getProviders()
     this.getDateToday()
+    this.search(this.searchTemp)
   }
 
   ngOnDestroy(): void {
@@ -62,9 +66,28 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
   search(val: string): void {
     this.invoices = this.temp;
     if (val !== 'all') {
-      this.invoices = this.invoices.filter(data => data.name.toLowerCase().indexOf(val) !== -1 || !val);
+      this.invoices = this.invoices.filter(data =>
+        data.name.toLowerCase().indexOf(val) !== -1 ||
+        data.code.toLowerCase().indexOf(val) !== -1 || !val);
     }
+    this.invoices = this.invoices.filter(e => {
+      const date = new Date(e.date)
+      const dateFrom = new Date(this.from + 'T00:00:00')
+      const dateTo = new Date(this.to + 'T00:00:00')
+      return date >= dateFrom && date <= dateTo
+    })
   }
+
+  /*updateDate(): void {
+    this.invoices = this.temp
+    this.invoices = this.invoices.filter(e => {
+      const date = new Date(e.date)
+      const dateFrom = new Date(this.from + 'T00:00:00')
+      const dateTo = new Date(this.to + 'T00:00:00')
+      return date >= dateFrom && date <= dateTo
+    })
+    console.log(this.invoices)
+  }*/
 
   private getDateToday(): void {
     this.from = Utils.dateString(1);
@@ -75,10 +98,6 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
     this.subscription.add(this.pds.getItems().subscribe(() => {
       this.providers = this.pds.items;
     }));
-  }
-
-  updateDate(): void {
-
   }
 
   fileChange(element): void {
@@ -100,9 +119,14 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
     })
   }
 
-  showInvoice(idImage: string): void {
+  showInvoice(idSource: string): void {
+    this.isImage = true
     const endpointApiFiles = environment.api_files
-    this.imageURL = endpointApiFiles + '/invoice/?name=' + idImage + '&token=' + this.tokenApiFiles
+    this.sourceURL = endpointApiFiles + '/invoice/?name=' + idSource + '&token=' + this.tokenApiFiles
+    if (idSource.indexOf('.pdf') !== - 1) {
+      this.isImage = false
+    }
+    this.afs.getInvoice(this.tokenApiFiles, idSource).subscribe()
   }
 
   edit(item: any): void {

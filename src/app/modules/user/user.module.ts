@@ -1,19 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { UserRoutingModule } from './user-routing.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { MainComponent } from './components/main/main.component';
-import { MovementComponent } from './components/movement/movement.component';
-import { ClientComponent } from './components/client/client.component';
-import { ProductComponent } from './components/product/product.component';
-import {NotifierModule, NotifierOptions} from "angular-notifier";
-import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
-import { CategoryComponent } from './components/category/category.component';
-import {FormsModule} from "@angular/forms";
-import { MeasureComponent } from './components/measure/measure.component';
-import { ProviderComponent } from './components/provider/provider.component';
-import { InvoiceComponent } from './components/invoice/invoice.component';
+import {UserRoutingModule} from './user-routing.module';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {MainComponent} from './components/main/main.component';
+import {MovementComponent} from './components/movement/movement.component';
+import {ClientComponent} from './components/client/client.component';
+import {ProductComponent} from './components/product/product.component';
+import {NotifierModule, NotifierOptions} from 'angular-notifier';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {CategoryComponent} from './components/category/category.component';
+import {FormsModule} from '@angular/forms';
+import {MeasureComponent} from './components/measure/measure.component';
+import {ProviderComponent} from './components/provider/provider.component';
+import {InvoiceComponent} from './components/invoice/invoice.component';
+import {PdfViewerModule} from 'ng2-pdf-viewer';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -57,13 +58,21 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-  declarations: [DashboardComponent, MainComponent, MovementComponent, ClientComponent, ProductComponent, CategoryComponent, MeasureComponent, ProviderComponent, InvoiceComponent],
-    imports: [
-        CommonModule,
-        UserRoutingModule,
-        SweetAlert2Module,
-        NotifierModule.withConfig(customNotifierOptions),
-        FormsModule,
-    ]
+  declarations: [
+    DashboardComponent,
+    MainComponent,
+    MovementComponent,
+    ClientComponent,
+    ProductComponent,
+    CategoryComponent, MeasureComponent, ProviderComponent, InvoiceComponent],
+  imports: [
+    CommonModule,
+    UserRoutingModule,
+    SweetAlert2Module,
+    NotifierModule.withConfig(customNotifierOptions),
+    FormsModule,
+    PdfViewerModule,
+  ]
 })
-export class UserModule { }
+export class UserModule {
+}

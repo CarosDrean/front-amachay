@@ -24,13 +24,13 @@
         <div class="row" style="margin-top: 1.5em">
           <div class="col-6">
             <div class="form-group">
-              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="from" name="from" (change)="updateDate()">
+              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="from" name="from" (change)="search(searchTemp)">
               <small id="textHelp" class="form-text text-muted">Desde</small>
             </div>
           </div>
           <div class="col-6">
             <div class="form-group">
-              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="to" name="to" (change)="updateDate()">
+              <input type="date" class="form-control" value="2018-05-13" [(ngModel)]="to" name="to" (change)="search(searchTemp)">
               <small id="textHelp2" class="form-text text-muted">Hasta</small>
             </div>
           </div>
@@ -201,7 +201,7 @@
               (change)="fileChange($event)"
               type="file"
               class="form-control-file"
-              accept=".jpg, .png"
+              accept=".jpg, .png, .pdf"
               id="exampleInputFile"
             />
           </div>
@@ -264,10 +264,19 @@
       </div>
 
       <div class="modal-body">
-        <img [src] = "imageURL" style="width: 100%">
+        <img *ngIf="isImage" [src] = "sourceURL" style="width: 100%">
+        <pdf-viewer *ngIf="!isImage" [src]="sourceURL"
+                    [original-size]="false"
+        ></pdf-viewer>
       </div>
 
       <div class="modal-footer">
+        <a href="{{sourceURL}}"
+           target="_blank"
+           type="button"
+           class="btn btn-success">
+          Decargar
+        </a>
         <button
           type="button"
           class="btn btn-primary"
