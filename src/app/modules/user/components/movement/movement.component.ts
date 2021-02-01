@@ -14,6 +14,9 @@ import {UserService} from '../../../../services/user.service';
 import {Filter} from '../../../../interfaces/filter';
 import {ProviderService} from '../../../../services/provider.service';
 import {Provider} from '../../../../interfaces/provider';
+import {Store} from '@ngrx/store';
+import {SearchAction} from '../../../../store/search/search.reducer';
+import {MovementAction} from '../../../../store/movement/movement.reducer';
 
 @Component({
   selector: 'app-movement',
@@ -44,7 +47,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, public ms: MovementService,
               private nt: NotifierService, private ps: ProductService, private cs: ClientService,
-              private us: UserService, private pds: ProviderService) {
+              private us: UserService, private pds: ProviderService, private store: Store<any>) {
     super(ms, nt);
   }
 
@@ -112,6 +115,11 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     console.log(this.item)
   }
 
+  movementDispatch(): void {
+    const action = new MovementAction('change');
+    this.store.dispatch(action);
+  }
+
   sendForm(): void {
     const n = this.item.idProduct.toString();
     this.item.idProduct = +n;
@@ -135,6 +143,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     }
 
     this.addItem(this.item).then((r) => {
+      this.movementDispatch()
       this.getProducts(this.user.idWarehouse.toString())
     })
   }

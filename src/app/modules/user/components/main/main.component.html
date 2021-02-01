@@ -95,15 +95,13 @@
               aria-expanded="false"
             >
               <span><i data-feather="bell" class="svg-icon"></i></span>
-              <span class="badge badge-primary notify-no rounded-circle"
-              >5</span
-              >
+              <span class="badge badge-primary notify-no rounded-circle">{{productsNotification.length}}</span>
             </a>
             <div
               class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown"
             >
               <ul class="list-style-none">
-                <li>
+                <li *ngFor="let item of productsNotification">
                   <div class="message-center notifications position-relative">
                     <!-- Message -->
                     <a
@@ -111,21 +109,19 @@
                       class="message-item d-flex align-items-center border-bottom px-3 py-2"
                     >
                       <div class="btn btn-danger rounded-circle btn-circle">
-                        <i data-feather="airplay" class="text-white"></i>
+                        <i class="fas fa-truck"></i>
                       </div>
                       <div class="w-75 d-inline-block v-middle pl-2">
-                        <h6 class="message-title mb-0 mt-1">Luanch Admin</h6>
+                        <h6 class="message-title mb-0 mt-1">Alerta de Stock</h6>
                         <span class="font-12 text-nowrap d-block text-muted"
-                        >Just see the my new admin!</span
-                        >
+                        >Se esta agotando: {{item.name}}</span>
                         <span class="font-12 text-nowrap d-block text-muted"
-                        >9:30 AM</span
-                        >
+                        >{{item.stock}} {{item.measure}} disponible</span>
                       </div>
                     </a>
                   </div>
                 </li>
-                <li>
+                <!--<li>
                   <a
                     class="nav-link pt-3 text-center text-dark"
                     href="javascript:void(0);"
@@ -133,7 +129,7 @@
                     <strong>Check all notifications</strong>
                     <i class="fa fa-angle-right"></i>
                   </a>
-                </li>
+                </li>-->
               </ul>
             </div>
           </li>
