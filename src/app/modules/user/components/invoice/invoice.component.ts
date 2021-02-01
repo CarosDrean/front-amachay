@@ -31,6 +31,7 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
   invoices: Invoice[] = []
   isImage = true
   searchTemp = ''
+  filter = 'all'
 
   constructor(public is: InvoiceService, private ns: NotifierService, private afs: ApiFilesService,
               private pds: ProviderService, private store: Store<any>) {
@@ -65,6 +66,10 @@ export class InvoiceComponent extends ComponentAbstract implements OnInit, OnDes
 
   search(val: string): void {
     this.invoices = this.temp;
+    if (this.filter !== 'all') {
+      this.invoices = this.invoices.filter(data => data.idProvider.toString() === this.filter)
+    }
+
     if (val !== 'all') {
       this.invoices = this.invoices.filter(data =>
         data.name.toLowerCase().indexOf(val) !== -1 ||

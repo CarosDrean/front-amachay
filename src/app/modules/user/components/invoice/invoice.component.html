@@ -1,6 +1,6 @@
 <div class="page-breadcrumb">
   <div class="row">
-    <div class="col-6-lg col-md-6 col-sm-12 align-self-center">
+    <div class="col-3-lg col-md-3 col-sm-12 align-self-center">
       <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">
         <div>Lista de Facturas</div>
       </h4>
@@ -19,7 +19,7 @@
         </nav>
       </div>
     </div>
-    <div class="col-6-lg col-md-6 col-sm-12 align-self-center">
+    <div class="col-5-lg col-md-5 col-sm-12 align-self-center">
       <div class="customize-input float-right">
         <div class="row" style="margin-top: 1.5em">
           <div class="col-6">
@@ -37,10 +37,23 @@
         </div>
       </div>
     </div>
+    <div class="col-4-lg col-md-4 col-sm-12 align-self-center">
+      <div class="customize-input float-right">
+        <select
+          name="filter"
+          class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius"
+          [(ngModel)]="filter"
+          (change)="search(searchTemp)"
+        >
+          <option selected value="all">Todos</option>
+          <option *ngFor="let item of providers" value="{{item._id}}">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="container-fluid" style="padding: 30px;">
+<div class="container-fluid" style="padding: 30px; padding-top: 0 !important;">
   <div class="row">
     <div>
       <button
@@ -264,7 +277,7 @@
       </div>
 
       <div class="modal-body">
-        <img *ngIf="isImage" [src] = "sourceURL" style="width: 100%">
+        <img *ngIf="isImage" [src] = "sourceURL" style="width: 100%" alt="">
         <pdf-viewer *ngIf="!isImage" [src]="sourceURL"
                     [original-size]="false"
         ></pdf-viewer>

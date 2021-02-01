@@ -1,6 +1,6 @@
-# Front
+# Front AMACHAY
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+Amachay es un proyecto de almacen, este repositorio es el frontend de la aplicación.
 
 ## Development server
 
