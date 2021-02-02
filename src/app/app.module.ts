@@ -24,6 +24,7 @@ import {MeasureService} from './services/measure.service';
 import {ProviderService} from './services/provider.service';
 import {ApiFilesService} from './services/api-files.service';
 import {InvoiceService} from './services/invoice.service';
+import {BrandService} from './services/brand.service';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -98,6 +99,7 @@ const customNotifierOptions: NotifierOptions = {
     ProviderService,
     ApiFilesService,
     InvoiceService,
+    BrandService,
   ],
   bootstrap: [AppComponent]
 })

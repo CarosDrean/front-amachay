@@ -17,6 +17,8 @@ import {Provider} from '../../../../interfaces/provider';
 import {Store} from '@ngrx/store';
 import {SearchAction} from '../../../../store/search/search.reducer';
 import {MovementAction} from '../../../../store/movement/movement.reducer';
+import {BrandService} from '../../../../services/brand.service';
+import {Brand} from '../../../../interfaces/brand';
 
 @Component({
   selector: 'app-movement',
@@ -30,8 +32,10 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
   to: string;
   idWarehouse: number
   stockLot = 0
+  stockBrand = 0
   stockBase = 0
   lots: Movement[] = []
+  brandsOut: Movement[] = []
 
   measure = 'Unidad de Medida'
   stock = 0
@@ -44,10 +48,12 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
   clients: Client[] = [];
   providers: Provider[] = [];
   movements: Movement[] = [];
+  brands: Brand[] = []
 
   constructor(private route: ActivatedRoute, private router: Router, public ms: MovementService,
               private nt: NotifierService, private ps: ProductService, private cs: ClientService,
-              private us: UserService, private pds: ProviderService, private store: Store<any>) {
+              private us: UserService, private pds: ProviderService, private store: Store<any>,
+              private bs: BrandService) {
     super(ms, nt);
   }
 
@@ -66,17 +72,46 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     }
   }
 
+  private getBrands(): void {
+    this.subscription.add(this.bs.getItems().subscribe(() => {
+      this.brands = this.bs.items
+    }))
+  }
+
+  private getBrandsProducts(idProduct: number): void {
+    const filter: Filter = {
+      _id: idProduct.toString(),
+      auxId: this.idWarehouse.toString()
+    }
+    this.ms.getItemsAllBrandsWarehouse(filter).subscribe(() => {
+      this.brandsOut = this.ms.items
+      if (this.item.idBrand) {
+        this.changeBrand()
+      }
+    })
+  }
+
+  changeBrand(): void {
+    const brand = this.brandsOut.find(e => e.idBrand === this.item.idBrand)
+    this.stockBrand = brand.quantity
+    this.stockBase = this.stockBrand
+  }
+
   changeProduct(): void {
     const product = this.products.find(e => e._id.toString() === this.item.idProduct.toString())
     this.measure = product.measure
     this.stock = product.stock
     this.stockBase = this.stock
     this.perishable = product.perishable
-    this.getLots(product._id)
+    if (this.perishable) {
+      this.getLots(product._id)
+    } else {
+      this.getBrandsProducts(product._id)
+    }
   }
 
   changeLot(): void {
-    const lot = this.lots.find(e => e.lot === this.item.lot)
+    const lot = this.lots.find(e => e.idLot === this.item.idLot)
     this.stockLot = lot.quantity
     this.stockBase = this.stockLot
   }
@@ -88,7 +123,6 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
       dateFrom: this.from,
       dateTo: this.to
     };
-    console.log(filter);
     this.subscription.add(this.ms.getItemsFilter(filter).subscribe(() => {
       this.movements = this.ms.items;
     }));
@@ -100,6 +134,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.getDateToday();
     this.getClients();
     this.getProviders()
+    this.getBrands()
     this.perishable = false
   }
 
@@ -139,19 +174,21 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
       }
     }
     if (this.type === 'input' && this.perishable) {
-      this.item.state = true
+      // aqui definir el lot
     }
+    console.log(this.item)
 
-    this.addItem(this.item).then((r) => {
+    /*this.addItem(this.item).then((r) => {
+      console.log(r)
       this.movementDispatch()
       this.getProducts(this.user.idWarehouse.toString())
-    })
+    })*/
   }
 
   resetItem(): void {
     this.item = {
       date: Utils.dateString(),
-      idProduct: 1,
+      idProduct: 0,
       idUser: this.user === undefined ? 1 : this.user._id,
       idWarehouse: this.user === undefined ? 1 : this.user.idWarehouse,
       quantity: 1,
@@ -176,7 +213,8 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
       this.lots.forEach((e, i) => {
         this.lots[i].dayDue = Utils.dueDateCompare(e.dueDate)
       })
-      if (this.item.lot) {
+      this.lots = this.lots.sort((e1, e2) => new Date(e1.dueDate) > new Date(e2.dueDate) ? 1 : -1)
+      if (this.item.idLot) {
         this.changeLot()
       }
     })

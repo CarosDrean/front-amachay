@@ -11,10 +11,11 @@ export interface Movement {
   quantity: number;
   type: string;
 
-  idInvoice?: string
+  idLot?: number
   lot?: string
   dueDate?: string
-  state?: boolean
+  idBrand?: number
+  brand?: string
   perishable?: boolean
   dayDue?: number
 }

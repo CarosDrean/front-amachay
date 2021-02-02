@@ -23,8 +23,8 @@ export class MovementService extends Service{
     );
   }
 
-  getInvoicesWarehouse(filter: Filter): Observable<any> {
-    return this.https.post(this.URL_API + `invoices-warehouse/`, filter).pipe(
+  getItemsAllBrandsWarehouse(filter: Filter): Observable<any> {
+    return this.https.post(this.URL_API + `all-brands-warehouse/`, filter).pipe(
       map((items: any[]) => {
         this.items = items;
       })

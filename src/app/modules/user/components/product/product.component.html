@@ -82,7 +82,17 @@
                     >
                       Lotes
                     </button>
-                    <p *ngIf="!item.perishable">-</p>
+                    <button
+                      *ngIf="!item.perishable"
+                      type="button"
+                      class="btn waves-effect waves-light btn-rounded btn-sm btn-primary"
+                      (click)="getBrands(item._id)"
+                      data-toggle="modal"
+                      data-target="#form-brand"
+                      style="margin-right: 5px;"
+                    >
+                      Marcas
+                    </button>
                   </td>
                   <td>
                     <button
@@ -304,6 +314,7 @@
                       <th>#</th>
                       <th>Producto</th>
                       <th>Lote</th>
+                      <th>Marca</th>
                       <th>Stock</th>
                       <th>Medida</th>
                       <th>F.V.</th>
@@ -318,6 +329,7 @@
                       <td>{{ i + 1 }}</td>
                       <td>{{ item.product }}</td>
                       <td>{{item.lot}}</td>
+                      <td>{{item.brand}}</td>
                       <th>{{item.quantity}}</th>
                       <th>{{item.measure}}</th>
                       <th>{{item.dueDate | date: 'dd/MM/yyyy'}}</th>
@@ -362,6 +374,78 @@
           type="button"
           class="btn btn-primary"
           (click)="closeLots()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div
+  id="form-brand"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabelBrand">Lista de Marcas</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <div>
+                  <table class="table">
+                    <thead class="bg-success text-white">
+                    <tr>
+                      <th>#</th>
+                      <th>Producto</th>
+                      <th>Marca</th>
+                      <th>Stock</th>
+                      <th>Medida</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr
+                      *ngFor="let item of brands; let i = index"
+                      [attr.data-index]="i"
+                    >
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ item.product }}</td>
+                      <td>{{item.brand}}</td>
+                      <th>{{item.quantity}}</th>
+                      <th>{{item.measure}}</th>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="closeBrands()"
         >
           Cerrar
         </button>

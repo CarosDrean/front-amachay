@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ClientComponent} from "./components/client/client.component";
-import {MovementComponent} from "./components/movement/movement.component";
-import {CategoryComponent} from "./components/category/category.component";
-import {ProductComponent} from "./components/product/product.component";
-import {MainComponent} from "./components/main/main.component";
-import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {ClientComponent} from './components/client/client.component';
+import {MovementComponent} from './components/movement/movement.component';
+import {CategoryComponent} from './components/category/category.component';
+import {ProductComponent} from './components/product/product.component';
+import {MainComponent} from './components/main/main.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {MeasureComponent} from './components/measure/measure.component';
 import {ProviderComponent} from './components/provider/provider.component';
 import {InvoiceComponent} from './components/invoice/invoice.component';
+import {BrandComponent} from './components/brand/brand.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
           { path: 'measure', component: MeasureComponent },
           { path: 'provider', component: ProviderComponent },
           { path: 'invoice', component: InvoiceComponent },
+          { path: 'brand', component: BrandComponent },
           { path: '**', pathMatch: 'full', redirectTo: 'dashboard' },
         ]
       }

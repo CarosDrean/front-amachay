@@ -33,6 +33,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   categories: Category[] = [];
   measures: Measure[] = []
   lots: Movement[] = []
+  brands: Movement[] = []
   private user: User;
   filter = 'all';
   temp = [];
@@ -118,8 +119,22 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
     })
   }
 
+  getBrands(idProduct: number): void {
+    const filter: Filter = {
+      _id: idProduct.toString(),
+      auxId: this.idWarehouse.toString()
+    }
+    this.mvs.getItemsAllBrandsWarehouse(filter).subscribe(() => {
+      this.brands = this.mvs.items
+    })
+  }
+
   closeLots(): void {
     $('#form-lot').modal('hide');
+  }
+
+  closeBrands(): void {
+    $('#form-brand').modal('hide');
   }
 
   edit(item: any): void {

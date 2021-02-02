@@ -169,12 +169,36 @@
               class="form-control"
               id="exampleFormControlSelect5"
               name="lot"
-              [(ngModel)]="item.lot"
+              [(ngModel)]="item.idLot"
               (change)="changeLot()"
             >
-              <option *ngFor="let p of lots" value="{{p.lot}}">{{p.lot}} - {{p.dueDate | date: 'dd/MM/yyyy'}}</option>
+              <option *ngFor="let p of lots" [ngValue]="p.idLot">{{p.lot}} - {{p.dueDate | date: 'dd/MM/yyyy'}}</option>
             </select>
             <small id="textHelp6" [ngClass]="stockLot == 0 ? 'badge-danger' : 'badge-primary'" class="badge badge-default form-text text-white float-left">{{stockLot}}</small>
+          </div>
+          <div *ngIf="type == 'input'" class="form-group" style="margin-top: 35px">
+            <label for="exampleFormControlSelect8">Marca</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect8"
+              name="lot"
+              [(ngModel)]="item.idBrand"
+            >
+              <option *ngFor="let p of brands" [ngValue]="p._id">{{p.name}}</option>
+            </select>
+          </div>
+          <div *ngIf="type == 'output' && !perishable" class="form-group" style="margin-top: 35px">
+            <label for="exampleFormControlSelect9">Marca</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect9"
+              name="brand"
+              [(ngModel)]="item.idBrand"
+              (change)="changeBrand()"
+            >
+              <option *ngFor="let p of brandsOut" [ngValue]="p.idBrand">{{p.brand}}</option>
+            </select>
+            <small id="textHelp9" [ngClass]="stockBrand == 0 ? 'badge-danger' : 'badge-primary'" class="badge badge-default form-text text-white float-left">{{stockBrand}}</small>
           </div>
           <div class="form-group" style="margin-top: 35px">
 

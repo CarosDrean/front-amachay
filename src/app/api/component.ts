@@ -30,7 +30,7 @@ export abstract class ComponentAbstract{
           this.hideModal()
           this.nts.notify('success', 'Actualizando...' );
           this.getItems()
-          resolve('Creado con exito');
+          resolve('Actualizado con exito');
         }, error => {
           this.nts.notify('error', '¡Hubo un error al actualizar!' );
           reject(error);
@@ -41,9 +41,9 @@ export abstract class ComponentAbstract{
           const response = JSON.stringify(res);
           this.nts.notify('success', 'Creando...' );
           this.getItems()
-          resolve('Actualizado con exito');
+          resolve('Creado con exito');
         }, error => {
-          this.nts.notify('error', '¡Hubo un error al actualizar!' );
+          this.nts.notify('error', '¡Hubo un error al  crear!' );
           reject(error);
         })
       }
