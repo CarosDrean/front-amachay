@@ -152,8 +152,8 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     console.log(this.item)
   }
 
-  movementDispatch(): void {
-    const action = new MovementAction('change');
+  movementDispatch(message: string): void {
+    const action = new MovementAction(message);
     this.store.dispatch(action);
   }
 
@@ -177,8 +177,7 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     }
 
     this.addItem(this.item).then((r) => {
-      console.log(r)
-      this.movementDispatch()
+      this.movementDispatch(r + ' ' + new Date().getMilliseconds())
       this.getProducts(this.user.idWarehouse.toString())
     })
   }

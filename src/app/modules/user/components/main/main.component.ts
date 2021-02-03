@@ -30,6 +30,7 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(private ls: LoginService, private us: UserService, private store: Store<any>, private ps: ProductService) {
     this.search = store.pipe(select('search'));
     store.select(MOVEMENT).subscribe(data => {
+      console.log(data)
       this.getNotifications()
     })
   }
