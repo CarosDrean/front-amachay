@@ -291,7 +291,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabelLot">Lista de Lotes</h4>
+        <h4 class="modal-title" id="myModalLabelLot">Lista de Lotes de <strong>{{productName}}</strong></h4>
         <button
           type="button"
           class="close"
@@ -312,7 +312,6 @@
                     <thead class="bg-success text-white">
                     <tr>
                       <th>#</th>
-                      <th>Producto</th>
                       <th>Lote</th>
                       <th>Marca</th>
                       <th>Stock</th>
@@ -327,7 +326,6 @@
                       [attr.data-index]="i"
                     >
                       <td>{{ i + 1 }}</td>
-                      <td>{{ item.product }}</td>
                       <td>{{item.lot}}</td>
                       <td>{{item.brand}}</td>
                       <th>{{item.quantity}}</th>

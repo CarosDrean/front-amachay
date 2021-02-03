@@ -38,6 +38,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   filter = 'all';
   temp = [];
   aux = [];
+  productName = ''
 
   constructor(public ps: ProductService, private nt: NotifierService, private cs: CategoryService,
               private us: UserService, private store: Store<any>, private ms: MeasureService,
@@ -107,6 +108,8 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   }
 
   getLots(idProduct: number): void {
+    const product = this.products.find(e => e._id === idProduct)
+    this.productName = product.name
     const filter: Filter = {
       _id: idProduct.toString(),
       auxId: this.idWarehouse.toString()
