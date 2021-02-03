@@ -147,9 +147,8 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     this.item.date = Utils.dateToString(new Date(this.item.date))
     if (this.item.perishable) {
       this.item.dueDate = Utils.dateToString(new Date(this.item.dueDate))
-      this.changeProduct()
     }
-    console.log(this.item)
+    this.changeProduct()
   }
 
   movementDispatch(message: string): void {
