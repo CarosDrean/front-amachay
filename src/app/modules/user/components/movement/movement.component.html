@@ -200,7 +200,20 @@
             </select>
             <small id="textHelp9" [ngClass]="stockBrand == 0 ? 'badge-danger' : 'badge-primary'" class="badge badge-default form-text text-white float-left">{{stockBrand}}</small>
           </div>
-          <div class="form-group" style="margin-top: 35px">
+          <div *ngIf="type == 'output' && perishable" class="form-group" style="margin-top: 35px">
+            <label for="marca">Marca</label>
+            <input
+              class="form-control"
+              type="text"
+              id="marca"
+              required=""
+              name="marca"
+              [disabled]="true"
+              [(ngModel)]="item.brand"
+              placeholder="Marca"
+            />
+          </div>
+          <div class="form-group" style="margin-top: 25px">
 
             <label for="quantity">Cantidad</label>
             <input

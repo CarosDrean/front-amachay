@@ -114,6 +114,8 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
     const lot = this.lots.find(e => e.idLot === this.item.idLot)
     this.stockLot = lot.quantity
     this.stockBase = this.stockLot
+    this.item.idBrand = lot.idBrand
+    this.item.brand = lot.brand
   }
 
   private getItemsFilter(): void {
@@ -173,16 +175,12 @@ export class MovementComponent extends ComponentAbstract implements OnInit {
         this.item.quantity = -this.item.quantity;
       }
     }
-    if (this.type === 'input' && this.perishable) {
-      // aqui definir el lot
-    }
-    console.log(this.item)
 
-    /*this.addItem(this.item).then((r) => {
+    this.addItem(this.item).then((r) => {
       console.log(r)
       this.movementDispatch()
       this.getProducts(this.user.idWarehouse.toString())
-    })*/
+    })
   }
 
   resetItem(): void {

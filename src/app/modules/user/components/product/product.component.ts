@@ -119,6 +119,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
       this.lots.forEach((e, i) => {
         this.lots[i].dayDue = Utils.dueDateCompare(e.dueDate)
       })
+      this.lots = this.lots.sort((a, b) => new Date(a.dueDate) > new Date(b.dueDate) ? 1 : -1)
     })
   }
 
