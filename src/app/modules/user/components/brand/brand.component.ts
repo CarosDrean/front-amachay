@@ -4,6 +4,8 @@ import {Brand} from '../../../../interfaces/brand';
 import {BrandService} from '../../../../services/brand.service';
 import {NotifierService} from 'angular-notifier';
 
+declare var $: any
+
 @Component({
   selector: 'app-brand',
   templateUrl: './brand.component.html',
@@ -24,6 +26,17 @@ export class BrandComponent extends ComponentAbstract implements OnInit, OnDestr
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+  }
+
+  getItems(): void {
+    this.subscription.add(this.service.getItems().subscribe(() => {
+      console.log(this.bs.items)
+      setTimeout(() =>
+        {
+          $('#zero_config').DataTable();
+        },
+        10)
+    }));
   }
 
   edit(item: any): void {
