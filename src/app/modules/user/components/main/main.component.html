@@ -88,6 +88,7 @@
             <a
               class="nav-link dropdown-toggle pl-md-3 position-relative"
               href="javascript:void(0)"
+              (click)="viewNotifications()"
               id="bell"
               role="button"
               data-toggle="dropdown"
@@ -95,7 +96,9 @@
               aria-expanded="false"
             >
               <span><i data-feather="bell" class="svg-icon"></i></span>
-              <span class="badge badge-primary notify-no rounded-circle">{{productsNotification.length}}</span>
+              <span *ngIf="(counterNotification | async) != 0" class="badge badge-primary notify-no rounded-circle">
+                {{counterNotification | async}}
+              </span>
             </a>
             <div
               class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown"
