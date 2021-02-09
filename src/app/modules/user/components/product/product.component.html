@@ -61,6 +61,7 @@
                   <th>#</th>
                   <th>Nombre</th>
                   <th>Precio</th>
+                  <th>Categoria</th>
                   <th>Stock</th>
                   <th>Medida</th>
                   <th>Unidades</th>
@@ -76,6 +77,7 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.name }}</td>
                   <td>{{item.price}}</td>
+                  <td>{{item.category}}</td>
                   <th [ngClass]="item.stock <= item.minAlert ? 'red' : (item.stock - item.minAlert) < 10 ? 'alert': ''">{{item.stock}}</th>
                   <th>{{item.measure}}</th>
                   <th>{{item.stock * item.unity}}</th>

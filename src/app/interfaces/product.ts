@@ -6,6 +6,7 @@ export interface Product {
   stock: number;
   idCategory: number;
 
+  category?: string
   idProductMeasure?: number
   idMeasure?: number
   measure?: string
