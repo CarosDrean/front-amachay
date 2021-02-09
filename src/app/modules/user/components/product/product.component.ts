@@ -15,6 +15,7 @@ import {MovementService} from '../../../../services/movement.service';
 import {Filter} from '../../../../interfaces/filter';
 import {Movement} from '../../../../interfaces/movement';
 import {Utils} from '../../../../shared/utils';
+import {filter} from "rxjs/operators";
 
 declare var $: any;
 
@@ -39,6 +40,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   temp = [];
   aux = [];
   productName = ''
+  searchTemp = ''
 
   constructor(public ps: ProductService, private nt: NotifierService, private cs: CategoryService,
               private us: UserService, private store: Store<any>, private ms: MeasureService,
@@ -48,6 +50,7 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
       let text = 'all';
       if (data !== ''){
         text = data;
+        this.searchTemp = text
       }
       this.search(text);
     }));
@@ -65,10 +68,12 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
   }
 
   search(val: string): void {
-    this.filter = 'all';
     this.products = this.temp;
     if (val !== 'all') {
       this.products = this.products.filter(data => data.name.toLowerCase().indexOf(val) !== -1 || !val);
+    }
+    if (this.filter !== 'all') {
+      this.products = this.products.filter(data => data.idCategory === +this.filter)
     }
   }
 
@@ -83,6 +88,12 @@ export class ProductComponent extends ComponentAbstract implements OnInit, OnDes
       this.products = this.ps.items;
       this.products = this.products.sort((a, b) => a.stock > b.stock ? 1 : -1)
       this.temp = this.products;
+      console.log(this.products)
+      setTimeout(() =>
+        {
+          $('#zero_config').DataTable();
+        },
+        10)
     });
   }
 

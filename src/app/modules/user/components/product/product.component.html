@@ -21,7 +21,15 @@
     </div>
     <div class="col-5 align-self-center">
       <div class="customize-input float-right">
-
+        <select
+          name="filter"
+          class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius"
+          [(ngModel)]="filter"
+          (change)="search(searchTemp)"
+        >
+          <option selected value="all">Todos</option>
+          <option *ngFor="let item of categories" value="{{item._id}}">{{item.name}}</option>
+        </select>
       </div>
     </div>
   </div>
@@ -45,9 +53,9 @@
       <div class="card">
         <div class="card-body">
           <h6 class="card-subtitle">Se encontraron <code>{{products.length}}</code> registros.</h6>
-          <div class="table-responsive">
+          <div class="table-responsive" style="padding: 15px">
             <div>
-              <table class="table">
+              <table id="zero_config" class="table">
                 <thead class="bg-success text-white">
                 <tr>
                   <th>#</th>
